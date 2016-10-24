@@ -5,10 +5,12 @@
  */
 package controlador;
 
+import Factory.DTOFactory;
+import facade.FachadaPreguntas;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -16,8 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.PreguntaRespuestaDTO;
-import persistencia.PreguntaRespuestaDAO;
-import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
 /**
@@ -25,6 +25,9 @@ import utilidades.MiExcepcion;
  * @author UserQV
  */
 public class PreguntasRespuestas extends HttpServlet {
+
+    FachadaPreguntas facadePR;
+    DTOFactory dtoFactory;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,23 +42,25 @@ public class PreguntasRespuestas extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            if (request.getParameter("view") != null) {
-                ListarPreguntas(request, response);
-            } else if (request.getParameter("new") != null) {
-                nuevaPregunta(request, response);
-            } else if (request.getParameter("id") != null) {
-                eliminarPregunta(request, response);
+        try {
+            facadePR = new FachadaPreguntas();
+            try (PrintWriter out = response.getWriter()) {
+                if (request.getParameter("view") != null) {
+                    ListarPreguntas(request, response);
+                } else if (request.getParameter("new") != null) {
+                    nuevaPregunta(request, response);
+                } else if (request.getParameter("id") != null) {
+                    eliminarPregunta(request, response);
+                }
             }
+        } catch (MiExcepcion ex) {
+            response.sendRedirect("index.jsp?er=" + ex.getMessage());
         }
     }
 
     public void ListarPreguntas(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Connection con = Conexion.getInstance();
-            PreguntaRespuestaDAO pdao = new PreguntaRespuestaDAO();
-            ArrayList<PreguntaRespuestaDTO> listaPreguntas = pdao.listarTodo(con);
-
+            ArrayList<PreguntaRespuestaDTO> listaPreguntas = (ArrayList)facadePR.listarPreguntas();
             request.setAttribute("listPreguntas", listaPreguntas);
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (Exception ex) {
@@ -64,26 +69,25 @@ public class PreguntasRespuestas extends HttpServlet {
     }
 
     public void nuevaPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Connection con;
         try {
-            con = Conexion.getInstance();
-            PreguntaRespuestaDTO prDTO = new PreguntaRespuestaDTO();
-            prDTO.setPregunta(request.getParameter("inputQuestion"));
-            prDTO.setRespuesta(request.getParameter("inputAnswer"));
-            String respuesta = new PreguntaRespuestaDAO().crearRegistro(prDTO, con);
+            PreguntaRespuestaDTO dto = dtoFactory.crearPreguntaRespuesta();
+            dto.setPregunta(request.getParameter("inputQuestion"));
+            dto.setRespuesta(request.getParameter("inputAnswer"));
+            dto.setInicioVigencia(request.getParameter("inputInicio"));
+            dto.setInicioVigencia(request.getParameter("inputFin"));
+            dto.setFecha(String.valueOf(new Date()));
+            String respuesta = facadePR.insertarRespuesta(dto);
             response.sendRedirect("index.jsp?er=" + respuesta);
         } catch (MiExcepcion ex) {
             Logger.getLogger(PreguntasRespuestas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-     public void eliminarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Connection con;
+
+    public void eliminarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String respuesta = "";
         try {
-            con = Conexion.getInstance();
             String id = request.getParameter("id");
-            respuesta = new PreguntaRespuestaDAO().eliminarRegistro(id, con);
+            respuesta = facadePR.eliminarPreguntaRespuesta(id);
         } catch (MiExcepcion ex) {
             respuesta = "error: " + ex.getMessage();
         }

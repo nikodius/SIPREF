@@ -1,6 +1,0 @@
-persistencia\PreguntaRespuestaDAO.class
-utilidades\MiExcepcion.class
-modelo\PreguntaRespuestaDTO.class
-modelo\DiscucionPreguntaRespuestaDTO.class
-controlador\PreguntasRespuestas.class
-utilidades\Conexion.class

@@ -28,17 +28,12 @@ public class PreguntaRespuestaDTO {
         
     }
     
-    public PreguntaRespuestaDTO(int id, String pregunta, String respuesta, String fecha, String inicioVigencia, String finVigencia, int idUsuario, int idFacultad, String estado, ArrayList<DiscucionPreguntaRespuestaDTO> discuciones) {
-        this.id = id;
+    public PreguntaRespuestaDTO(String pregunta, String respuesta, String fecha, String inicioVigencia, String finVigencia) {
         this.pregunta = pregunta;
         this.respuesta = respuesta;
         this.fecha = fecha;
         this.inicioVigencia = inicioVigencia;
         this.finVigencia = finVigencia;
-        this.idUsuario = idUsuario;
-        this.idFacultad = idFacultad;
-        this.estado = estado;
-        this.discuciones = discuciones;
     }
     
     

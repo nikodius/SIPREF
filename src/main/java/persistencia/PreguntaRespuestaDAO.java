@@ -49,13 +49,15 @@ public class PreguntaRespuestaDAO {
     public String crearRegistro(PreguntaRespuestaDTO prDto, Connection conexion) {
         int resultado = 0;
         String respuesta = "";
-        String sql = "INSERT INTO pregunta_respuesta(Id_pregunta_respuesta, Contenido_pregunta, Contenido_respuesta) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO pregunta_respuesta(Contenido_pregunta, Contenido_respuesta, Inicio_vigencia,  Fin_vigencia, Fecha_creacion) VALUES (?, ?, ?, ?, ?)";
         try {
             Random r = new Random();
             statement = conexion.prepareStatement(sql);
-            statement.setInt(1, r.nextInt());
             statement.setString(2, prDto.getPregunta());
             statement.setString(3, prDto.getRespuesta());
+            statement.setString(4, prDto.getInicioVigencia());
+            statement.setString(5, prDto.getFinVigencia());
+            statement.setString(6, prDto.getFecha());
             resultado = statement.executeUpdate();
             if (resultado != 0) {
                 respuesta = "registrada";
