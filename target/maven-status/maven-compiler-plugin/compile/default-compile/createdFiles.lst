@@ -1,0 +1,9 @@
+modelo\PreguntaRespuestaDTO.class
+modelo\DiscucionPreguntaRespuestaDTO.class
+utilidades\Conexion.class
+persistencia\PreguntaRespuestaDAO.class
+facade\FachadaPreguntas.class
+Factory\DTOFactory.class
+utilidades\MiExcepcion.class
+controlador\PreguntasRespuestas.class
+Factory\Factory.class
