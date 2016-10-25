@@ -24,6 +24,7 @@
                 <ul>
                     <li><a title="Opcion 1" href="PreguntasRespuestas?view">Ver FAQS</a></li>
                     <li><a title="Opcion 2" href="newFAQ.jsp">CrearFAQ</a></li>
+                    <li><a title="Opcion 3" href="approveFAQ.jsp">Aprobar FAQ</a></li>
                 </ul>
             </nav>
             </header>

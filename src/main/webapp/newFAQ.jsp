@@ -8,27 +8,26 @@
 
 <jsp:include page="_header.jsp" />
 
-<div style="padding: 2% 20% 5% 20%;">
-<form  method="post" action="PreguntasRespuestas">
-    <div class="form-group">
-        <label for="inputQuestion">Pregunta</label>
-        <input type="text" class="form-control" id="inputQuestion" name="inputQuestion">
-    </div>
-    <div class="form-group">
-        <label for="inputAnswer">Respuesta</label>
-        <input type="text" class="form-control" id="inputAnswer" name="inputAnswer">
-    </div>
-    <div class="form-group">
-        <label for="inputInicio">Inicio Vigencia</label>
-        <input type="date" class="form-control" id="inputInicio" name="inputInicio">
-    </div>
-    <div class="form-group">
-        <label for="inputFin">Fin Vigencia</label>
-        <input type="date" class="form-control" id="inputFin" name="inputFin">
-    </div>
-    <input class="btn btn-primary" type="submit" name="new" id="new" value="Nueva FAQ"/>
-</form>
-    </div>
-
+<div class="cajaPrincipal">
+    <form  method="post" action="PreguntasRespuestas">
+        <div class="form-group">
+            <label for="inputQuestion">Pregunta</label>
+            <input type="text" class="form-control" id="inputQuestion" name="inputQuestion">
+        </div>
+        <div class="form-group">
+            <label for="inputAnswer">Respuesta</label>
+            <input type="text" class="form-control" id="inputAnswer" name="inputAnswer">
+        </div>
+        <div class="form-group">
+            <label for="inputInicio">Inicio Vigencia</label>
+            <input type="date" class="form-control" id="inputInicio" name="inputInicio">
+        </div>
+        <div class="form-group">
+            <label for="inputFin">Fin Vigencia</label>
+            <input type="date" class="form-control" id="inputFin" name="inputFin">
+        </div>
+        <input class="btn btn-primary" type="submit" name="new" id="new" value="Nueva FAQ"/>
+    </form>
+</div>
 
 <jsp:include page="_footer.jsp" />

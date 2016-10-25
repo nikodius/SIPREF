@@ -1,4 +1,8 @@
 
+.cajaPrincipal{
+   padding: 2% 20% 5% 20%; 
+   min-height: 400px;
+}
 .panelHeader{
     color: #fff;
     padding-top: 2%;
