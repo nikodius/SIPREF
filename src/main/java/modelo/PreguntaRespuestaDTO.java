@@ -22,16 +22,16 @@ public class PreguntaRespuestaDTO {
     private int idUsuario;
     private int idFacultad; 
     private String estado;
-    private ArrayList<DiscucionPreguntaRespuestaDTO> discuciones;
+    private int codigoEstado;
+    private ArrayList<ComentarioDTO> comentarios;
 
     public PreguntaRespuestaDTO(){
         
     }
     
-    public PreguntaRespuestaDTO(String pregunta, String respuesta, String fecha, String inicioVigencia, String finVigencia) {
+    public PreguntaRespuestaDTO(String pregunta, String respuesta, String inicioVigencia, String finVigencia) {
         this.pregunta = pregunta;
         this.respuesta = respuesta;
-        this.fecha = fecha;
         this.inicioVigencia = inicioVigencia;
         this.finVigencia = finVigencia;
     }
@@ -110,14 +110,28 @@ public class PreguntaRespuestaDTO {
         this.finVigencia = finVigencia;
     }
 
-    public ArrayList<DiscucionPreguntaRespuestaDTO> getDiscuciones() {
-        return discuciones;
+    public ArrayList<ComentarioDTO> getDiscuciones() {
+        return comentarios;
     }
 
-    public void setDiscuciones(ArrayList<DiscucionPreguntaRespuestaDTO> discuciones) {
-        this.discuciones = discuciones;
+    public void setDiscuciones(ArrayList<ComentarioDTO> comentarios) {
+        this.comentarios = comentarios;
     }
     
-    
+    public int getCodigoEstado() {
+        return codigoEstado;
+    }
+
+    public void setCodigoEstado(int codigoEstado) {
+        this.codigoEstado = codigoEstado;
+    }
+
+    public ArrayList<ComentarioDTO> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(ArrayList<ComentarioDTO> comentarios) {
+        this.comentarios = comentarios;
+    }
     
 }

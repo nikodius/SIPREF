@@ -34,7 +34,19 @@ public class FachadaPreguntas {
         return prdao.listarTodo(conexion);
     }
     
-    public String eliminarPreguntaRespuesta(String id) throws MiExcepcion{
-        return prdao.eliminarRegistro(id, conexion);
+    public List<PreguntaRespuestaDTO> listarPreguntasConsultas() throws MiExcepcion{
+        return prdao.listarParaConsultas(conexion);
+    }
+     
+    public String cambiarEstadoPreguntaRespuesta(String id, int estado) throws MiExcepcion{
+        return prdao.cambiarEstadoPregunta(id, conexion, estado);
+    }
+      
+    public PreguntaRespuestaDTO detallesPreguntaRespuesta(int id) throws MiExcepcion{
+        return prdao.detallesPreguntaRespuesta(conexion, id);
+    }
+    
+    public String editarPreguntaRespuesta(PreguntaRespuestaDTO pr, int id) throws MiExcepcion{
+        return prdao.editarPreguntaRespuesta(conexion, pr, id);
     }
 }

@@ -1,14 +1,14 @@
 <%-- 
     Document   : createFAQ
     Created on : 21/10/2016, 12:10:48 PM
-    Author     : UserQV
+    Author     : Niko
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="_header.jsp" />
-
 <div class="cajaPrincipal">
+     <div align="left"><a href="PreguntasRespuestas?view"><img src="images/back.png" alt="back"/></a></div>
     <form  method="post" action="PreguntasRespuestas">
         <div class="form-group">
             <label for="inputQuestion">Pregunta</label>
@@ -26,7 +26,7 @@
             <label for="inputFin">Fin Vigencia</label>
             <input type="date" class="form-control" id="inputFin" name="inputFin">
         </div>
-        <input class="btn btn-primary" type="submit" name="new" id="new" value="Nueva FAQ"/>
+        <input class="btn btn-primary" type="submit" name="new" id="new" value="Crear"/>
     </form>
 </div>
 

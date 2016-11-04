@@ -4,9 +4,17 @@
         <servlet-name>PreguntasRespuestas</servlet-name>
         <servlet-class>controlador.PreguntasRespuestas</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Consultar</servlet-name>
+        <servlet-class>controlador.Consultar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PreguntasRespuestas</servlet-name>
         <url-pattern>/PreguntasRespuestas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Consultar</servlet-name>
+        <url-pattern>/Consultar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

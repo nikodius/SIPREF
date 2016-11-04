@@ -1,9 +1,12 @@
+C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\modelo\ComentarioDTO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\facade\FachadaPreguntas.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\modelo\PreguntaRespuestaDTO.java
+C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\ComentariosDAO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\utilidades\MiExcepcion.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\PreguntasRespuestas.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\PreguntaRespuestaDAO.java
-C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\modelo\DiscucionPreguntaRespuestaDTO.java
+C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\Consultar.java
+C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\utilidades\Utilities.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\Factory\Factory.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\Factory\DTOFactory.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\utilidades\Conexion.java
