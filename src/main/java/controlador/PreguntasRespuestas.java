@@ -68,7 +68,7 @@ public class PreguntasRespuestas extends HttpServlet {
                 } 
             }
         } catch (MiExcepcion ex) {
-            response.sendRedirect("index.jsp?er=" + ex.getMessage());
+            response.sendRedirect("preguntasRespuestas.jsp?er=" + ex.getMessage());
         }
     }
 
@@ -76,9 +76,9 @@ public class PreguntasRespuestas extends HttpServlet {
         try {
             ArrayList<PreguntaRespuestaDTO> listaPreguntas = (ArrayList)facadePR.listarPreguntas();
             request.setAttribute("listPreguntas", listaPreguntas);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("preguntasRespuestas.jsp").forward(request, response);
         } catch (Exception ex) {
-            response.sendRedirect("index.jsp?er=" + ex.getMessage());
+            response.sendRedirect("preguntasRespuestas.jsp?er=" + ex.getMessage());
         }
     }
        
@@ -149,7 +149,7 @@ public class PreguntasRespuestas extends HttpServlet {
             request.setAttribute("preguntaRespuesta", pr);
             request.getRequestDispatcher("editFAQ.jsp").forward(request, response);
         } catch (Exception ex) {
-            response.sendRedirect("index.jsp?er=" + ex.getMessage());
+            response.sendRedirect("preguntasRespuestas.jsp?er=" + ex.getMessage());
         }
     }
     
