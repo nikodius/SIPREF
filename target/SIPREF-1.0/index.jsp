@@ -1,74 +1,59 @@
-<%-- 
+<!--
     Document   : index
-    Created on : 18/10/2016, 09:07:59 AM
-    Author     : NicolasRG
---%>
+    Created on : 23/10/2016, 09:07:59 AM
+    Author     : Jairo Medina
+-->
+<html> 
+    <head>
+        <!--script>
+            function nobackbutton() {
+                window.location.hash = "no-back-button";
+                window.location.hash = "Again-No-back-button"; //chrome
+                window.onhashchange = function () {
+                    window.location.hash = "no-back-button";
+                };
+            }
+        </script-->
+        <title>SIPREF</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/estilosIndex.css" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
+        <!--jsp:include page="_header.jsp" /-->
+    </head>
 
-<%@page import="modelo.PreguntaRespuestaDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<jsp:include page="_header.jsp" />
-<script>
-    $(document).ready(function () {
-        $("#mensaje").fadeOut(7000);
-    });
-</script>
-<div class="row cajaPrincipal">
-    <% if (request.getParameter("msg") != null) { %>
-    <div id="mensaje" align="center" class="alert alert-info"><%out.print(request.getParameter("msg"));%></div>
-    <% }%>
-    <%if (request.getAttribute("listPreguntas") != null) {
-            List<PreguntaRespuestaDTO> lista = (ArrayList) request.getAttribute("listPreguntas");
+    <%
+        HttpSession miSession = request.getSession();
     %>
-    <div align="right"><a href="PreguntasRespuestas?add"><img src="images/add.png" id="imgEX" alt="Modificar Registro"/></a></div>
-    <table class = "table table-striped table-bordered table-hover table-condensed" id="listarNotas" >
-        <thead>
-            <tr>
-                <th>Pregunta</th>
-                <th>Respuesta</th>
-                <th>Inicio Vigencia</th>
-                <th>Fin Vigencia</th>
-                <th>Estado</th>
-                <th>Editar</th>
-                <th>Aprobar</th>
-                <th>Activar</th>
-            </tr>
-        </thead>
-        <tbody> 
-            <%
-                for (PreguntaRespuestaDTO pdto : lista) {
-            %>
-            <tr>
-                <td><%=pdto.getPregunta()%></td>
-                <td><%=pdto.getRespuesta()%></td>
-                <td><%=pdto.getInicioVigencia()%></td>
-                <td><%=pdto.getFinVigencia()%></td>
-                <td><%=pdto.getEstado()%></td>
-                <td>
-                    <a href="PreguntasRespuestas?editId=<% out.print(pdto.getId());%>"><img src="images/edit.png" id="imgEX" alt="Modificar Registro"/></a>
-                </td>
+    <body role="document" onload="if ('Navigator' == navigator.appName)
+                document.forms[0].reset();
+            nobackbutton()">  
+        <div class="container" role="dialog">   
+            <div class="modal-dialog-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="btn btn-lg pull-right"><a href="Consultar"><i><strong>CONSULTAR EN SIPREF </strong></i></a></button>
+                        <button class="btn btn-lg pull-left"><a modal-header-btn href="login.jsp"><strong>GESTIONAR SIPREF</strong></a></button>
+                    </div>
+                      <div class="modal-header">
+                        <img src="images/Portada.PNG" alt="logo" width="1100" height="600"/>
+                        <img src="images/Portada2a.PNG" alt="logo" width="1100" height="600"/>
+                        <img src="images/Portada3.PNG" alt="logo" width="1100" height="600"/>
+                        <img src="images/Portada4.PNG" alt="logo" width="1100" height="600"/>
+                        <img src="images/Portada5.PNG" alt="logo" width="1100" height="600"/>
+                        <img src="images/Portada6.PNG" alt="logo" width="1100" height="600"/>
+                        <img src="images/Portada7.PNG" alt="logo" width="1100" height="600"/>
+                        <img src="images/Portada8.PNG" alt="logo" width="1100" height="300"/>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <% if (pdto.getCodigoEstado() == 1) {%>
-                <td><a href="PreguntasRespuestas?approve=<% out.print(pdto.getId());%>"><img src="images/approve.png" alt="approve"/></a></td>
-                        <%} else if (pdto.getCodigoEstado() == 2) {%>
-                <td><a href="PreguntasRespuestas?disapprove=<% out.print(pdto.getId());%>"><img src="images/disapprove.png" alt="disapprove"/></a></td>
-                        <%} else {%>
-                <td></td>
-                <%}%>
+    </body>
 
-                <% if (pdto.getCodigoEstado() == 3) {%>
-                <td><a href="PreguntasRespuestas?active=<% out.print(pdto.getId());%>"><img src="images/activate.png" alt="activate"/></a></td> 
-                        <%} else {%>
-                <td><a href="PreguntasRespuestas?deactivate=<% out.print(pdto.getId());%>"><img src="images/disactivate.png" alt="disactivate"/></a></td>
-                        <%}%>
 
-            </tr>
-            <%}%>
-        </tbody>
-    </table>
-    <%}%>
-</div>
+    
 
-<jsp:include page="_footer.jsp" />
+</html>

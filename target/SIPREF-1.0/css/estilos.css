@@ -1,3 +1,13 @@
+.modal-header{
+    background-color: #0D5494;
+    color: #fff; 
+}
+
+.modal-header-btn{
+    /*color: #FF6600;*/
+    color: #ff0000;
+    background-color: #fff0000;
+}
 
 .cajaPrincipal{
    padding: 2% 20% 5% 20%; 

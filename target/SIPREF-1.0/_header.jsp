@@ -17,16 +17,24 @@
     <body>
         <div align="center" id="centrado">
             <header>
-                <hgroup class="panelHeader">
-                    <h1>SIPREF</h1>
-                    <h2>Sistema de preguntas y respuestas frecuentes</h2>
-                </hgroup>
-                <nav>
-                <ul>
-                    <li><a title="Opcion 1" href="PreguntasRespuestas?view">Ver FAQS</a></li>
-                    <li><a title="Opcion 2" href="PreguntasRespuestas?add">CrearFAQ</a></li>
-                    <li><a title="Opcion 3" href="Consultar?view">Consulta Externa</a></li>
-                </ul>
-            </nav>
+                <div class="container" role="dialog">   
+            <div class="modal-dialog-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="row">
+                            <center>
+                                <div class="col-xs-12 col-sm-2">
+                                    <img src="images/Logo.PNG" alt="logo" width="150" height="80"/>
+                                </div>
+                                <div class="col-xs-12 col-sm-10">
+                                    <h5 class=""><strong>SISTEMA DE INFORMACION DE PREGUNTAS Y RESPUESTAS FRECUENTES</strong></h5>
+                                    <h4>SIPREF</h4>
+                                </div>
+                            </center>
+                        </div>    
+                    </div> 
+                </div>
+            </div>         
+        </div>
             </header>
         
