@@ -15,7 +15,7 @@ public class ComentarioDTO {
     
     private int idComentario;
     private String contenido;
-    private Date fechaComentario;
+    private String fechaComentario;
     private String nombreComentarista;
     private String emailComentarista;
     private int idPadre;
@@ -24,7 +24,7 @@ public class ComentarioDTO {
     public ComentarioDTO() {
     }
 
-    public ComentarioDTO(int idComentario, String contenido, Date fechaComentario, String nombreComentarista, String emailComentarista, int idPadre, int idPreguntaRespuesta) {
+    public ComentarioDTO(int idComentario, String contenido, String fechaComentario, String nombreComentarista, String emailComentarista, int idPadre, int idPreguntaRespuesta) {
         this.idComentario = idComentario;
         this.contenido = contenido;
         this.fechaComentario = fechaComentario;
@@ -52,11 +52,11 @@ public class ComentarioDTO {
         this.contenido = contenido;
     }
 
-    public Date getFechaComentario() {
+    public String getFechaComentario() {
         return fechaComentario;
     }
 
-    public void setFechaComentario(Date fechaComentario) {
+    public void setFechaComentario(String fechaComentario) {
         this.fechaComentario = fechaComentario;
     }
 

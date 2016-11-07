@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/estilos.css">
+        <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
         <script src="js/jquery-3.1.1.js"></script>
         <title>SIPREF</title>
     </head>

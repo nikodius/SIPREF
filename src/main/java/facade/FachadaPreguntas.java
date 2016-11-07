@@ -6,8 +6,11 @@
 package facade;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
+import modelo.ComentarioDTO;
 import modelo.PreguntaRespuestaDTO;
+import persistencia.ComentariosDAO;
 import persistencia.PreguntaRespuestaDAO;
 import utilidades.Conexion;
 import utilidades.MiExcepcion;
@@ -19,10 +22,12 @@ import utilidades.MiExcepcion;
 public class FachadaPreguntas {
     
     PreguntaRespuestaDAO prdao;
+    ComentariosDAO cdao;
     Connection conexion;
     
     public FachadaPreguntas() throws MiExcepcion {
         prdao = new PreguntaRespuestaDAO();
+        cdao = new ComentariosDAO();
         conexion = Conexion.getInstance();
     }
     
@@ -35,7 +40,12 @@ public class FachadaPreguntas {
     }
     
     public List<PreguntaRespuestaDTO> listarPreguntasConsultas() throws MiExcepcion{
-        return prdao.listarParaConsultas(conexion);
+        List<PreguntaRespuestaDTO> preguntas = prdao.listarParaConsultas(conexion);
+        for(PreguntaRespuestaDTO pr : preguntas){
+            ArrayList<ComentarioDTO> comentarios = cdao.listarComentarios(conexion, pr.getId());
+            pr.setComentarios(comentarios);
+        }
+        return preguntas;
     }
      
     public String cambiarEstadoPreguntaRespuesta(String id, int estado) throws MiExcepcion{
@@ -48,5 +58,9 @@ public class FachadaPreguntas {
     
     public String editarPreguntaRespuesta(PreguntaRespuestaDTO pr, int id) throws MiExcepcion{
         return prdao.editarPreguntaRespuesta(conexion, pr, id);
+    }
+    
+    public String insertarComentario(ComentarioDTO cdto) throws MiExcepcion{
+        return cdao.crearRegistro(cdto, conexion);
     }
 }

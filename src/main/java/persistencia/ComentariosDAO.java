@@ -25,11 +25,13 @@ public class ComentariosDAO {
     ResultSet rs;
     String mensaje = "";
 
-    public ArrayList<ComentarioDTO> listarTodo(Connection conexion) throws MiExcepcion {
-        ArrayList<ComentarioDTO> listaPreguntas = new ArrayList();
+    public ArrayList<ComentarioDTO> listarComentarios(Connection conexion, int id) throws MiExcepcion {
+        ArrayList<ComentarioDTO> listaComentarios = new ArrayList();
         try {
-            String query = "SELECT  Id_comentario, Contenido_comentario, Nombre_persona_comentario, Email_persona_comentario, Id_padre_comentario, Id_pregunta_respuesta FROM comentario;";
+            String query = "SELECT  Id_comentario, Contenido_comentario, Nombre_presona_comenta, Email_persona_comenta, Id_pregunta_respuesta, Fecha_comentario "
+                    + "FROM comentario WHERE Id_pregunta_respuesta=?;";
             statement = conexion.prepareStatement(query);
+            statement.setInt(1, id);
             rs = statement.executeQuery();
             while (rs.next()) {
                 ComentarioDTO comentario = new ComentarioDTO();
@@ -37,22 +39,22 @@ public class ComentariosDAO {
                 comentario.setContenido(rs.getString(2));
                 comentario.setNombreComentarista(rs.getString(3));
                 comentario.setEmailComentarista(rs.getString(4));
-                comentario.setIdPadre(rs.getInt(5));
-                comentario.setIdPreguntaRespuesta(rs.getInt(6));
-                listaPreguntas.add(comentario);
+                comentario.setIdPreguntaRespuesta(rs.getInt(5));
+                comentario.setFechaComentario(rs.getString(6));
+                listaComentarios.add(comentario);
             }
         } catch (SQLException sqlexception) {
             throw new MiExcepcion("Error " + sqlexception, sqlexception);
         }
         //devolvemos el arreglo
-        return listaPreguntas;
+        return listaComentarios;
 
     }
 
     public String crearRegistro(ComentarioDTO comentario, Connection conexion) {
         int resultado = 0;
         String respuesta = "";
-        String sql = "INSERT INTO comentario(Contenido_comentario, Fecha_comentario, Nombre_persona_comentario, Email_persona_comentario, Id_padre_comentario, Id_pregunta_respuesta) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO comentario(Contenido_comentario, Fecha_comentario, Nombre_presona_comenta, Email_persona_comenta, Id_pregunta_respuesta) VALUES (?, ?, ?, ?, ?)";
         try {
             Random r = new Random();
             statement = conexion.prepareStatement(sql);
@@ -60,18 +62,18 @@ public class ComentariosDAO {
             statement.setString(2, String.valueOf(comentario.getFechaComentario()));
             statement.setString(3, comentario.getNombreComentarista());
             statement.setString(4, comentario.getEmailComentarista());
-            statement.setInt(5, comentario.getIdPadre());
-            statement.setInt(6, comentario.getIdPreguntaRespuesta());
+            statement.setInt(5, comentario.getIdPreguntaRespuesta());
             resultado = statement.executeUpdate();
             if (resultado != 0) {
-                respuesta = "registrada";
+                respuesta = "comentario registrado";
 
             } else {
-                respuesta = "NO se ha registrado";
+                respuesta = "NO se registro el comentario";
             }
 
         } catch (SQLException ex) {
             System.out.println("Error de MySQL: " + ex.getMessage());
+            respuesta = "error al insertar el comentario";
         }
         return respuesta;
     }

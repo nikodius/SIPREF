@@ -20,11 +20,11 @@
         <input type="hidden" name="idPr" id="idPr" value="<%=pr.getId()%>">
         <div class="form-group">
             <label for="inputQuestion">Pregunta</label>
-            <input type="text" class="form-control" id="inputQuestion" name="inputQuestion" value="<%=pr.getPregunta()%>">
+            <input type="text" class="form-control" id="inputQuestion" name="inputQuestion" value="<%=pr.getPregunta()%>" required>
         </div>
         <div class="form-group">
             <label for="inputAnswer">Respuesta</label>
-            <input type="text" class="form-control" id="inputAnswer" name="inputAnswer" value="<%=pr.getRespuesta()%>">
+            <input type="text" class="form-control" id="inputAnswer" name="inputAnswer" value="<%=pr.getRespuesta()%>" required>
         </div>
         <div class="form-group">
             <label for="inputInicio">Inicio Vigencia</label>

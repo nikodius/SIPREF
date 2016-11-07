@@ -9,22 +9,26 @@ import Factory.DTOFactory;
 import facade.FachadaPreguntas;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.PreguntaRespuestaDTO;
+import modelo.ComentarioDTO;
+import utilidades.MiExcepcion;
+import utilidades.Utilities;
 
 /**
  *
- * @author UserQV
+ * @author Nico
  */
-public class Consultar extends HttpServlet {
+@WebServlet(name = "Comentarios", urlPatterns = {"/Comentarios"})
+public class Comentarios extends HttpServlet {
 
     FachadaPreguntas facadePR;
     DTOFactory dtoFactory;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,20 +42,35 @@ public class Consultar extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        try {
+         try {
             facadePR = new FachadaPreguntas();
-            try (PrintWriter out = response.getWriter()) {
-//            ListarPreguntas(request, response);
-                ArrayList<PreguntaRespuestaDTO> listaPreguntas = (ArrayList) facadePR.listarPreguntasConsultas();
-                request.setAttribute("listPreguntas", listaPreguntas);
-                request.getRequestDispatcher("consult.jsp").forward(request, response);
-//                response.sendRedirect("consult.jsp");
-            }
-        } catch (Exception ex) {
-            System.out.println("error " + ex.getMessage());
-            response.sendRedirect("consult.jsp?er=" + ex.getMessage());
+        try (PrintWriter out = response.getWriter()) {
+            if (request.getParameter("sendComent") != null) {
+                   nuevoComentario(request, response);
+                }
+        }
+        } catch (MiExcepcion ex) {
+            response.sendRedirect("Consultar.jsp?er=" + ex.getMessage());
         }
     }
+    
+    public void nuevoComentario(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String respuesta = "";
+        try {
+            ComentarioDTO dto = new ComentarioDTO();
+            dto.setContenido(request.getParameter("coment"));
+            dto.setNombreComentarista(request.getParameter("name"));
+            dto.setEmailComentarista(request.getParameter("mail"));
+            dto.setIdPreguntaRespuesta(Integer.parseInt(request.getParameter("idPR")));
+            dto.setFechaComentario(String.valueOf(Utilities.getFechaActual()));
+            respuesta = facadePR.insertarComentario(dto);
+            
+        } catch (MiExcepcion ex) {
+            respuesta = "error al insertar el comentario";
+        }
+        response.sendRedirect("Consultar?msg="+respuesta);
+    }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
