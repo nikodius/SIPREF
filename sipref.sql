@@ -1,7 +1,6 @@
-﻿# Host: localhost  (Version 5.7.16-log)
-# Date: 2016-11-07 17:30:12
-# Generator: MySQL-Front 5.4  (Build 2.11)
-# Internet: http://www.mysqlfront.de/
+﻿# Host: localhost  (Version: 5.6.25-log)
+# Date: 2016-11-08 16:04:25
+# Generator: MySQL-Front 5.3  (Build 4.214)
 
 /*!40101 SET NAMES utf8 */;
 
@@ -21,7 +20,7 @@ CREATE TABLE `directorioactivo` (
 # Data for table "directorioactivo"
 #
 
-REPLACE INTO `directorioactivo` VALUES (1,'user','pass',1);
+INSERT INTO `directorioactivo` VALUES (1,'user','pass',1);
 
 #
 # Structure for table "estado_pregunta_respuesta"
@@ -29,7 +28,7 @@ REPLACE INTO `directorioactivo` VALUES (1,'user','pass',1);
 
 CREATE TABLE `estado_pregunta_respuesta` (
   `Id_estado_pregunta_respuesta` int(11) NOT NULL AUTO_INCREMENT,
-  `Nombre_estado` varchar(45) DEFAULT NULL,
+  `Nombre_estado` varchar(100) DEFAULT NULL,
   `Descripcion_pregunta_respuesta` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Id_estado_pregunta_respuesta`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -38,7 +37,7 @@ CREATE TABLE `estado_pregunta_respuesta` (
 # Data for table "estado_pregunta_respuesta"
 #
 
-REPLACE INTO `estado_pregunta_respuesta` VALUES (1,'Sin Aprobar',NULL),(2,'Aprobada',NULL),(3,'Inactiva',NULL);
+INSERT INTO `estado_pregunta_respuesta` VALUES (1,'Sin Aprobar',NULL),(2,'Aprobada',NULL),(3,'Inactiva',NULL);
 
 #
 # Structure for table "facultad"
@@ -64,13 +63,13 @@ CREATE TABLE `roles` (
   `Id_rol` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre_rol` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "roles"
 #
 
-REPLACE INTO `roles` VALUES (1,'Administrador'),(2,'Autor');
+INSERT INTO `roles` VALUES (1,'Administrador'),(2,'Autor');
 
 #
 # Structure for table "usuario"
@@ -84,16 +83,17 @@ CREATE TABLE `usuario` (
   `Email_usuario` varchar(45) DEFAULT NULL,
   `Estado_usuario` varchar(45) DEFAULT NULL,
   `Id_rol` int(11) DEFAULT NULL,
-  `Aprobrar_pregunta_usuario` tinyint(1) DEFAULT NULL,
+  `Aprobar_pregunta_usuario` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`Id_usuario`),
   KEY `Id_rol_idx` (`Id_rol`),
   CONSTRAINT `Id_rol` FOREIGN KEY (`Id_rol`) REFERENCES `roles` (`Id_rol`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=dec8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=dec8;
 
 #
 # Data for table "usuario"
 #
 
+INSERT INTO `usuario` VALUES (1,'Juan','Perez','64654','emal@mail.com',NULL,2,0);
 
 #
 # Structure for table "pregunta_respuesta"
@@ -122,7 +122,7 @@ CREATE TABLE `pregunta_respuesta` (
 # Data for table "pregunta_respuesta"
 #
 
-REPLACE INTO `pregunta_respuesta` VALUES (2,'¿Como puedo ver las fechas de los grados?','Ingresando a www.poligran.edu.co opcion grados','2016-11-04','2016-11-30',NULL,NULL,2,'2016-12-31'),(3,'Cual es el proceso de admisiones','Debe inscribirse a través de la pagina www.poligran.edu.co/admisiones','2016-11-04','2016-11-30',NULL,NULL,2,'2016-12-31'),(4,'pregunta n','respuesta n','2016-11-04','2016-11-03',NULL,NULL,2,'2016-11-30'),(5,'pregunta 001','respuesta 001','2016-11-04','2016-11-11',NULL,NULL,1,'2016-11-25'),(6,'¿Como puedo ver mis notas?','entrando en www.poligran.edu.co/estudiantes con el usuario asignado en la opción calificaciones','2016-11-04','2016-11-03',NULL,NULL,2,'2016-11-30');
+INSERT INTO `pregunta_respuesta` VALUES (2,'¿Como puedo ver las fechas de los grados?','Ingresando a www.poligran.edu.co opcion grados','2016-11-04','2016-11-30',NULL,NULL,2,'2016-12-31'),(3,'Cual es el proceso de admisiones','Debe inscribirse a través de la pagina www.poligran.edu.co/admisiones','2016-11-04','2016-11-30',NULL,NULL,1,'2016-12-31'),(4,'pregunta n','respuesta n','2016-11-04','2016-11-03',NULL,NULL,2,'2016-11-30'),(5,'pregunta 001','respuesta 001','2016-11-04','2016-11-11',NULL,NULL,2,'2016-11-25'),(6,'¿Como puedo ver mis notas?','entrando en www.poligran.edu.co/estudiantes con el usuario asignado en la opción calificaciones','2016-11-04','2016-11-03',NULL,NULL,2,'2016-11-30');
 
 #
 # Structure for table "comentario"
@@ -139,10 +139,10 @@ CREATE TABLE `comentario` (
   PRIMARY KEY (`Id_comentario`),
   KEY `Id_pregunta_respuesta_idx` (`Id_pregunta_respuesta`),
   CONSTRAINT `Id_pregunta_respuesta` FOREIGN KEY (`Id_pregunta_respuesta`) REFERENCES `pregunta_respuesta` (`Id_pregunta_respuesta`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # Data for table "comentario"
 #
 
-REPLACE INTO `comentario` VALUES (1,'Gracias, ya pude consultar mis notas','2016-11-07','juan','juan@juan.com',NULL,6),(2,'sigo sin poder ver mis notas, por favor necesito mas informacion','2016-11-07','Paola','paola@hotmail.com',NULL,6);
+INSERT INTO `comentario` VALUES (1,'Gracias, ya pude consultar mis notas','2016-11-07','juan','juan@juan.com',NULL,6),(2,'sigo sin poder ver mis notas, por favor necesito mas informacion','2016-11-07','Paola','paola@hotmail.com',NULL,6);

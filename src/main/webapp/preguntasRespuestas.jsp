@@ -22,6 +22,9 @@
     <%if (request.getAttribute("listPreguntas") != null) {
             List<PreguntaRespuestaDTO> lista = (ArrayList) request.getAttribute("listPreguntas");
     %>
+    
+    <div><a href="Autores">Permiso aprobacion</a></div>
+    
     <div align="right"><a href="PreguntasRespuestas?add"><img src="images/add.png" id="imgEX" alt="Modificar Registro"/></a></div>
     <table class = "table table-striped table-bordered table-hover table-condensed" id="listarNotas" >
         <thead>

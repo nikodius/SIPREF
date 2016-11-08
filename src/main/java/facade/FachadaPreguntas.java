@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.ComentarioDTO;
 import modelo.PreguntaRespuestaDTO;
+import modelo.UsuarioDTO;
 import persistencia.ComentariosDAO;
 import persistencia.PreguntaRespuestaDAO;
+import persistencia.UsuarioDAO;
 import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
@@ -23,11 +25,13 @@ public class FachadaPreguntas {
     
     PreguntaRespuestaDAO prdao;
     ComentariosDAO cdao;
+    UsuarioDAO udao;
     Connection conexion;
-    
+        
     public FachadaPreguntas() throws MiExcepcion {
         prdao = new PreguntaRespuestaDAO();
         cdao = new ComentariosDAO();
+        udao = new UsuarioDAO();
         conexion = Conexion.getInstance();
     }
     
@@ -63,4 +67,5 @@ public class FachadaPreguntas {
     public String insertarComentario(ComentarioDTO cdto) throws MiExcepcion{
         return cdao.crearRegistro(cdto, conexion);
     }
+    
 }

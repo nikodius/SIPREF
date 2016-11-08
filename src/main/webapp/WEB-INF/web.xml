@@ -12,6 +12,10 @@
         <servlet-name>GestionLogin</servlet-name>
         <servlet-class>controlador.GestionLogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Autores</servlet-name>
+        <servlet-class>controlador.Autores</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PreguntasRespuestas</servlet-name>
         <url-pattern>/PreguntasRespuestas</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>GestionLogin</servlet-name>
         <url-pattern>/GestionLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Autores</servlet-name>
+        <url-pattern>/Autores</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

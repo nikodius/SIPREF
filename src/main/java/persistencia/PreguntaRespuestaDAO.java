@@ -137,7 +137,6 @@ public class PreguntaRespuestaDAO {
     public String cambiarEstadoPregunta(String id, Connection conexion, int estado) {
         int resultado = 0;
         String respuesta = "";
-        System.out.println("ID: " + id);
         String sql = "UPDATE pregunta_respuesta set Id_estado_pregunta=? "
                 + "WHERE Id_pregunta_respuesta = ?;";
         try {
