@@ -15,8 +15,8 @@
 %>
 
 <div class="cajaPrincipal">
-    <div align="left"><a href="PreguntasRespuestas?view"><img src="images/back.png" alt="back"/></a></div>
-    <form  method="post" action="PreguntasRespuestas">
+    <div align="left"><a href="PreguntasRespuestas"><img src="images/back.png" alt="back"/></a></div>
+    <form  method="post" action="PreguntasRespuestas?edit">
         <input type="hidden" name="idPr" id="idPr" value="<%=pr.getId()%>">
         <div class="form-group">
             <label for="inputQuestion">Pregunta</label>

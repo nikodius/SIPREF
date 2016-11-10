@@ -69,7 +69,7 @@ public class GestionLogin extends HttpServlet {
                     } else if (objLoginDTO.getIdRol() == 20) {//Autor
                         response.sendRedirect("Vistas/frmAutor.jsp");
                     } */
-                        response.sendRedirect("PreguntasRespuestas?view");
+                        response.sendRedirect("PreguntasRespuestas");
                     }
                     //De lo contrario vamos a la página errorLogin.jsp
             }

@@ -42,42 +42,40 @@ public class Autores extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try {
             facadeU = new FachadaUsuarios();
-            try (PrintWriter out = response.getWriter()) {
-                if (request.getParameter("approve") != null) {
-                    aprobarPregunta(request, response);
-                } else if (request.getParameter("disapprove") != null) {
-                    desaprobarPregunta(request, response);
-                } else {
-                    ArrayList<UsuarioDTO> listaAutores = (ArrayList) facadeU.listarAutores();
-                    request.setAttribute("listAutores", listaAutores);
-                    request.getRequestDispatcher("authorize.jsp").forward(request, response);
-                }
-            }
+            listarAutores(request, response);
         } catch (MiExcepcion ex) {
-            response.sendRedirect("preguntasRespuestas.jsp?er=" + ex.getMessage());
+            response.sendRedirect("Autor?msg=" + ex.getMessage());
         }
     }
 
-    public void aprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String respuesta = "";
-        try {
+    public void listarAutores(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getQueryString() == null || request.getParameter("msg") != null) {
+            ArrayList<UsuarioDTO> listaAutores = (ArrayList) facadeU.listarAutores();
+            request.setAttribute("listAutores", listaAutores);
+            request.getRequestDispatcher("authorize.jsp").forward(request, response);
+        } else {
+            aprobarPregunta(request, response);
+        }
+    }
+
+    public void aprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("approve") != null) {
             String id = request.getParameter("approve");
-            respuesta = facadeU.cambiarEstadoAprobarPregunta(id, 1);
-        } catch (MiExcepcion ex) {
-            respuesta = "error: " + ex.getMessage();
+            facadeU.cambiarEstadoAprobarPregunta(id, 1);
+            response.sendRedirect("Autores");
+        } else {
+            desaprobarPregunta(request, response);
         }
-        response.sendRedirect("Autores");
     }
 
-    public void desaprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String respuesta = "";
-        try {
+    public void desaprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("disapprove") != null) {
             String id = request.getParameter("disapprove");
-            respuesta = facadeU.cambiarEstadoAprobarPregunta(id, 0);
-        } catch (MiExcepcion ex) {
-            respuesta = "error: " + ex.getMessage();
+            facadeU.cambiarEstadoAprobarPregunta(id, 0);
+            response.sendRedirect("Autores");
+        } else {
+            response.sendRedirect("Autores");
         }
-        response.sendRedirect("Autores");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

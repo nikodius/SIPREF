@@ -41,14 +41,11 @@ public class Consultar extends HttpServlet {
         try {
             facadePR = new FachadaPreguntas();
             try (PrintWriter out = response.getWriter()) {
-//            ListarPreguntas(request, response);
                 ArrayList<PreguntaRespuestaDTO> listaPreguntas = (ArrayList) facadePR.listarPreguntasConsultas();
                 request.setAttribute("listPreguntas", listaPreguntas);
                 request.getRequestDispatcher("consult.jsp").forward(request, response);
-//                response.sendRedirect("consult.jsp");
             }
         } catch (Exception ex) {
-            System.out.println("error " + ex.getMessage());
             response.sendRedirect("consult.jsp?er=" + ex.getMessage());
         }
     }

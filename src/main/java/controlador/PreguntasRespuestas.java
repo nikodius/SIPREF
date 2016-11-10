@@ -9,6 +9,7 @@ import Factory.DTOFactory;
 import facade.FachadaPreguntas;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,51 +41,37 @@ public class PreguntasRespuestas extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            response.setContentType("text/html;charset=UTF-8");
+            request.setCharacterEncoding("UTF-8");
             facadePR = new FachadaPreguntas();
-            try (PrintWriter out = response.getWriter()) {
-                if (request.getParameter("view") != null) {
-                    ListarPreguntas(request, response);
-                } else if (request.getParameter("add") != null) {
-                    request.getRequestDispatcher("newFAQ.jsp").forward(request, response);
-                } else if (request.getParameter("new") != null) {
-                    nuevaPregunta(request, response);
-                } else if (request.getParameter("deactivate") != null) {
-                    desactivarPregunta(request, response);
-                } else if (request.getParameter("approve") != null) {
-                    aprobarPregunta(request, response);
-                } else if (request.getParameter("disapprove") != null) {
-                    desaprobarPregunta(request, response);
-                } else if (request.getParameter("active") != null) {
-                    activarPregunta(request, response);
-                } else if (request.getParameter("editId") != null) {
-                    redirectEditarPregunta(request, response);
-                } else if (request.getParameter("edit") != null) {
-                    actualizarPregunta(request, response);
-                } 
-            }
-        } catch (MiExcepcion ex) {
-            response.sendRedirect("preguntasRespuestas.jsp?er=" + ex.getMessage());
+            ListarPreguntas(request, response);
+        } catch (MiExcepcion | UnsupportedEncodingException | ServletException ex) {
+            response.sendRedirect("PreguntasRespuestas?msg=" + ex.getMessage());
         }
     }
 
-    public void ListarPreguntas(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            ArrayList<PreguntaRespuestaDTO> listaPreguntas = (ArrayList)facadePR.listarPreguntas();
+    public void ListarPreguntas(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getQueryString() == null || request.getParameter("msg") != null) {
+            ArrayList<PreguntaRespuestaDTO> listaPreguntas = (ArrayList) facadePR.listarPreguntas();
             request.setAttribute("listPreguntas", listaPreguntas);
             request.getRequestDispatcher("preguntasRespuestas.jsp").forward(request, response);
-        } catch (Exception ex) {
-            response.sendRedirect("preguntasRespuestas.jsp?er=" + ex.getMessage());
+        } else {
+            redireccionNuevaFAQ(request, response);
         }
     }
-       
-    public void nuevaPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-//            PreguntaRespuestaDTO dto = dtoFactory.crearPreguntaRespuesta();
+
+    public void redireccionNuevaFAQ(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion {
+        if (request.getParameter("add") != null) {
+            request.getRequestDispatcher("newFAQ.jsp").forward(request, response);
+        } else {
+            nuevaPregunta(request, response);
+        }
+    }
+
+    public void nuevaPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("new") != null) {
             PreguntaRespuestaDTO dto = new PreguntaRespuestaDTO();
             dto.setPregunta(request.getParameter("inputQuestion"));
             dto.setRespuesta(request.getParameter("inputAnswer"));
@@ -92,78 +79,74 @@ public class PreguntasRespuestas extends HttpServlet {
             dto.setFinVigencia(request.getParameter("inputFin"));
             dto.setFecha(String.valueOf(Utilities.getFechaActual()));
             String respuesta = facadePR.insertarRespuesta(dto);
-            response.sendRedirect("PreguntasRespuestas?view&msg="+respuesta);
-        } catch (MiExcepcion ex) {
-            Logger.getLogger(PreguntasRespuestas.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect("PreguntasRespuestas?msg=" + respuesta);
+        } else {
+            desactivarPregunta(request, response);
         }
     }
 
-    public void desactivarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String respuesta = "";
-        try {
+    public void desactivarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("deactivate") != null) {
             String id = request.getParameter("deactivate");
-            respuesta = facadePR.cambiarEstadoPreguntaRespuesta(id, 3);
-        } catch (MiExcepcion ex) {
-            respuesta = "error: " + ex.getMessage();
+            facadePR.cambiarEstadoPreguntaRespuesta(id, 3);
+            response.sendRedirect("PreguntasRespuestas");
+        } else {
+            activarPregunta(request, response);
         }
-        response.sendRedirect("PreguntasRespuestas?view");
     }
-    
-    public void activarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String respuesta = "";
-        try {
+
+    public void activarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("active") != null) {
             String id = request.getParameter("active");
-            respuesta = facadePR.cambiarEstadoPreguntaRespuesta(id, 1);
-        } catch (MiExcepcion ex) {
-            respuesta = "error: " + ex.getMessage();
+            facadePR.cambiarEstadoPreguntaRespuesta(id, 1);
+            response.sendRedirect("PreguntasRespuestas");
+        } else {
+            aprobarPregunta(request, response);
         }
-        response.sendRedirect("PreguntasRespuestas?view");
     }
-    
-    public void aprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String respuesta = "";
-        try {
+
+    public void aprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("approve") != null) {
             String id = request.getParameter("approve");
-            respuesta = facadePR.cambiarEstadoPreguntaRespuesta(id, 2);
-        } catch (MiExcepcion ex) {
-            respuesta = "error: " + ex.getMessage();
+            facadePR.cambiarEstadoPreguntaRespuesta(id, 2);
+            response.sendRedirect("PreguntasRespuestas");
+        } else {
+            desaprobarPregunta(request, response);
         }
-        response.sendRedirect("PreguntasRespuestas?view");
     }
-    
-    public void desaprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String respuesta = "";
-        try {
+
+    public void desaprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("disapprove") != null) {
             String id = request.getParameter("disapprove");
-            respuesta = facadePR.cambiarEstadoPreguntaRespuesta(id, 1);
-        } catch (MiExcepcion ex) {
-            respuesta = "error: " + ex.getMessage();
+            facadePR.cambiarEstadoPreguntaRespuesta(id, 1);
+            response.sendRedirect("PreguntasRespuestas");
+        } else {
+            redirectEditarPregunta(request, response);
         }
-        response.sendRedirect("PreguntasRespuestas?view");
     }
-    
-    public void redirectEditarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
+
+    public void redirectEditarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("editId") != null) {
             int id = Integer.parseInt(request.getParameter("editId"));
             PreguntaRespuestaDTO pr = facadePR.detallesPreguntaRespuesta(id);
             request.setAttribute("preguntaRespuesta", pr);
             request.getRequestDispatcher("editFAQ.jsp").forward(request, response);
-        } catch (Exception ex) {
-            response.sendRedirect("preguntasRespuestas.jsp?er=" + ex.getMessage());
+        } else {
+            actualizarPregunta(request, response);
         }
     }
-    
-    public void actualizarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    public void actualizarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion {
         String respuesta = "";
-        try {
-            PreguntaRespuestaDTO pr = new PreguntaRespuestaDTO(request.getParameter("inputQuestion"),request.getParameter("inputAnswer"),request.getParameter("inputInicio"),request.getParameter("inputFin"));
+        if (request.getParameter("edit") != null) {
+            PreguntaRespuestaDTO pr = new PreguntaRespuestaDTO(request.getParameter("inputQuestion"), request.getParameter("inputAnswer"), request.getParameter("inputInicio"), request.getParameter("inputFin"));
             respuesta = facadePR.editarPreguntaRespuesta(pr, Integer.parseInt(request.getParameter("idPr")));
-        } catch (Exception ex) {
-            respuesta = "error, no se pudo actualizar";
+            response.sendRedirect("PreguntasRespuestas?&msg=" + respuesta);
+        } else {
+            response.sendRedirect("PreguntasRespuestas");
         }
-        response.sendRedirect("PreguntasRespuestas?view&msg="+respuesta);
     }
- 
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -8,8 +8,8 @@
 
 <jsp:include page="_header.jsp" />
 <div class="cajaPrincipal">
-     <div align="left"><a href="PreguntasRespuestas?view"><img src="images/back.png" alt="back"/></a></div>
-    <form  method="post" action="PreguntasRespuestas">
+     <div align="left"><a href="PreguntasRespuestas"><img src="images/back.png" alt="back"/></a></div>
+    <form  method="post" action="PreguntasRespuestas?new">
         <div class="form-group">
             <label for="inputQuestion">Pregunta</label>
             <input type="text" class="form-control" id="inputQuestion" maxlength="200" name="inputQuestion" required>

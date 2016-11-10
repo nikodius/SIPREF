@@ -60,7 +60,7 @@
         <br/>
         <h2>Déjanos tu comentario</h2>
         <br>
-        <form  method="post" action="Comentarios">
+        <form  method="post" action="Comentarios?sendComent">
             <input type="hidden" class="form-control" id="idPR" name="idPR" value="<%=pdto.getId()%>">
 
             <div class="form-group">

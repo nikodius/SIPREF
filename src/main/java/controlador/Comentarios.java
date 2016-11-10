@@ -29,6 +29,7 @@ public class Comentarios extends HttpServlet {
 
     FachadaPreguntas facadePR;
     DTOFactory dtoFactory;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,21 +43,17 @@ public class Comentarios extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-         try {
+        try {
             facadePR = new FachadaPreguntas();
-        try (PrintWriter out = response.getWriter()) {
-            if (request.getParameter("sendComent") != null) {
-                   nuevoComentario(request, response);
-                }
-        }
+            nuevoComentario(request, response);
         } catch (MiExcepcion ex) {
-            response.sendRedirect("Consultar.jsp?er=" + ex.getMessage());
+            response.sendRedirect("Consultar?msg=" + ex.getMessage());
         }
     }
-    
-    public void nuevoComentario(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String respuesta = "";
-        try {
+
+    public void nuevoComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion {
+        if (request.getParameter("sendComent") != null) {
+            String respuesta = "";
             ComentarioDTO dto = new ComentarioDTO();
             dto.setContenido(request.getParameter("coment"));
             dto.setNombreComentarista(request.getParameter("name"));
@@ -64,13 +61,11 @@ public class Comentarios extends HttpServlet {
             dto.setIdPreguntaRespuesta(Integer.parseInt(request.getParameter("idPR")));
             dto.setFechaComentario(String.valueOf(Utilities.getFechaActual()));
             respuesta = facadePR.insertarComentario(dto);
-            
-        } catch (MiExcepcion ex) {
-            respuesta = "error al insertar el comentario";
+            response.sendRedirect("Consultar?msg=" + respuesta);
+        } else {
+            response.sendRedirect("Consultar");
         }
-        response.sendRedirect("Consultar?msg="+respuesta);
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
