@@ -33,4 +33,8 @@ public class FachadaUsuarios {
     public String cambiarEstadoAprobarPregunta(String id, int estado) throws MiExcepcion{
         return udao.cambiarEstadoAprobacion(id, conexion, estado);
     }
+    
+    public UsuarioDTO detallesUsuario(String user) throws MiExcepcion{
+        return udao.detallesUsuario(conexion, user);
+    }
 }

@@ -4,12 +4,23 @@
     Author     : Niko
 --%>
 
+<%@page import="modelo.UsuarioDTO"%>
 <%@page import="facade.FachadaPreguntas"%>
 <%@page import="modelo.PreguntaRespuestaDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="_header.jsp" />
-
+<% response.setHeader("Cache-Control", "no-cache");
+    response.setHeader("Cache-Control", "no-store");
+    response.setDateHeader("Expires", 0);
+    HttpSession sesion = request.getSession(false);
+    UsuarioDTO usuario = new UsuarioDTO();
+    if (sesion.getAttribute("user") == null) {
+        response.sendRedirect("GestionLogin");
+    } else {
+        usuario = (UsuarioDTO) sesion.getAttribute("user");
+    }
+%>
 <%if (request.getAttribute("preguntaRespuesta") != null) {
         PreguntaRespuestaDTO pr = (PreguntaRespuestaDTO) request.getAttribute("preguntaRespuesta");
 %>

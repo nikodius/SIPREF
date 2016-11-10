@@ -14,6 +14,7 @@ public class LoginDTO {
     private String nombreUsuario;
     private String contraseniaUsuario;
     private int idRol;
+    private boolean valido;
 
     public LoginDTO() {
     }
@@ -55,6 +56,14 @@ public class LoginDTO {
 
     public void setIdRol(int idRol) {
         this.idRol = idRol;
+    }
+
+    public boolean isValido() {
+        return valido;
+    }
+
+    public void setValido(boolean activo) {
+        this.valido = activo;
     }
 
     

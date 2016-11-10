@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import facade.FachadaUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -17,9 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.LoginDTO;
+import modelo.UsuarioDTO;
 import persistencia.LoginDAO;
 import utilidades.Conexion;
 import utilidades.MiExcepcion;
+
 /**
  *
  * @author Nico
@@ -27,6 +30,8 @@ import utilidades.MiExcepcion;
 public class GestionLogin extends HttpServlet {
 
     Connection conexion;
+    FachadaUsuarios facadeUser;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,46 +46,69 @@ public class GestionLogin extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8"); //Para que reconozca caracteres especiales y tildes
         try (PrintWriter out = response.getWriter()) {
-
             conexion = Conexion.getInstance();
-            LoginDTO objLoginDTO = new LoginDTO();
-            LoginDAO objLoginDAO = new LoginDAO();
-            HttpSession miSession = request.getSession();
-
-            if (request.getParameter("enviar").equals("Ingresar")) {
-                String usuario = request.getParameter("nombreUsuario");
-                String contrasenia = request.getParameter("contraseniaUsuario");
-
-                objLoginDTO.setNombreUsuario(usuario);
-                objLoginDTO.setContraseniaUsuario(contrasenia);
-                objLoginDTO = objLoginDAO.Login(objLoginDTO, conexion);
-                //objLoginDTO = objLoginDAO.Login(objLoginDTO);
-                System.out.println("NOMBRE: " + objLoginDTO.getNombreUsuario());
-
-                if (objLoginDTO.getNombreUsuario().equals("No en contrado")) {
-                    String mensaje = "1";
-                    miSession.setAttribute("mensaje", mensaje);
-                    response.sendRedirect("login.jsp");
-                } else {
-                    miSession.setAttribute("usuario", objLoginDTO);
-
-                    /*if (objLoginDTO.getIdRol() == 10) {//Administrador
-                        response.sendRedirect("Vistas/frmAdministrador.jsp");
-                    } else if (objLoginDTO.getIdRol() == 20) {//Autor
-                        response.sendRedirect("Vistas/frmAutor.jsp");
-                    } */
-                        response.sendRedirect("PreguntasRespuestas");
-                    }
-                    //De lo contrario vamos a la página errorLogin.jsp
-            }
-        } catch (MiExcepcion ex) {
-            Logger.getLogger(GestionLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(GestionLogin.class.getName()).log(Level.SEVERE, null, ex);
+            facadeUser = new FachadaUsuarios();
+            redireccionLogin(request, response);
+        } catch (MiExcepcion | SQLException ex) {
+            response.sendRedirect("GestionLogin?msg=" + ex.getMessage());
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    public void redireccionLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion, SQLException {
+        if (request.getQueryString() == null || request.getParameter("msg") != null) {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else {
+            login(request, response);
+        }
+    }
+
+    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion, SQLException {
+        if (request.getParameter("enviar") != null) {
+            LoginDTO objLoginDTO = new LoginDTO();
+            LoginDAO objLoginDAO = new LoginDAO();
+            String respuesta = "";
+            String usuario = request.getParameter("nombreUsuario");
+            String contrasenia = request.getParameter("contraseniaUsuario");
+            objLoginDTO.setNombreUsuario(usuario);
+            objLoginDTO.setContraseniaUsuario(contrasenia);
+            objLoginDTO = objLoginDAO.Login(objLoginDTO, conexion);
+            if (objLoginDTO.isValido()) {
+                UsuarioDTO user = facadeUser.detallesUsuario(objLoginDTO.getNombreUsuario());
+                //valida usuario activo
+                if (user.getIdEstado() == 1) {
+                    HttpSession sesion = request.getSession(true);
+                    sesion.setAttribute("user", user);
+                    //Autor
+//                    if (user.getIdRol() == 2) {
+//                        response.sendRedirect("PreguntasRespuestas");
+//                    }
+                    response.sendRedirect("PreguntasRespuestas");
+                } else{
+                    respuesta = "No se encontro el ususario en la aplicacion";
+                    response.sendRedirect("GestionLogin?msg=" + respuesta);
+                }
+            } else {
+                respuesta = "Datos de usuario incorrectos";
+                response.sendRedirect("GestionLogin?msg=" + respuesta);
+            }
+            //De lo contrario vamos a la página errorLogin.jsp
+        } else {
+            logout(request, response);
+        }
+    }
+
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (request.getParameter("logout") != null) {
+            HttpSession sesion = request.getSession(false);
+            sesion.invalidate();
+            sesion = null;
+            response.sendRedirect("GestionLogin");
+        } else {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+    }
+
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

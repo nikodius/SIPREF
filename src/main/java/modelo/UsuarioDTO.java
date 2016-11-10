@@ -16,11 +16,12 @@ public class UsuarioDTO {
     private String apellido;
     private String telefono;
     private String email;
-    private String idEstado;
+    private int idEstado;
     private String estado;
     private int idRol;
     private String rol;
     private boolean aprobarPregunta;
+    private String user;
 
     public int getId() {
         return id;
@@ -62,11 +63,11 @@ public class UsuarioDTO {
         this.email = email;
     }
 
-    public String getIdEstado() {
+    public int getIdEstado() {
         return idEstado;
     }
 
-    public void setIdEstado(String idEstado) {
+    public void setIdEstado(int idEstado) {
         this.idEstado = idEstado;
     }
 
@@ -100,6 +101,14 @@ public class UsuarioDTO {
 
     public void setAprobarPregunta(boolean aprobarPregunta) {
         this.aprobarPregunta = aprobarPregunta;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
     
     

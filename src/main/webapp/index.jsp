@@ -34,7 +34,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="btn btn-lg pull-right"><a href="Consultar"><i><strong>CONSULTAR EN SIPREF </strong></i></a></button>
-                        <button class="btn btn-lg pull-left"><a modal-header-btn href="login.jsp"><strong>GESTIONAR SIPREF</strong></a></button>
+                        <button class="btn btn-lg pull-left"><a href="GestionLogin"><strong>GESTIONAR SIPREF</strong></a></button>
                     </div>
                       <div class="modal-header">
                         <img src="images/Portada.PNG" alt="logo" width="1100" height="600"/>

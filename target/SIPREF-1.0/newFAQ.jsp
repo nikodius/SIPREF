@@ -4,9 +4,21 @@
     Author     : Niko
 --%>
 
+<%@page import="modelo.UsuarioDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="_header.jsp" />
+<% response.setHeader("Cache-Control", "no-cache");
+    response.setHeader("Cache-Control", "no-store");
+    response.setDateHeader("Expires", 0);
+    HttpSession sesion = request.getSession(false);
+    UsuarioDTO usuario = new UsuarioDTO();
+    if (sesion.getAttribute("user") == null) {
+        response.sendRedirect("GestionLogin");
+    } else {
+        usuario = (UsuarioDTO) sesion.getAttribute("user");
+    }
+%>
 <div class="cajaPrincipal">
      <div align="left"><a href="PreguntasRespuestas"><img src="images/back.png" alt="back"/></a></div>
     <form  method="post" action="PreguntasRespuestas?new">

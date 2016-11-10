@@ -10,12 +10,24 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="_header.jsp" />
+<% response.setHeader("Cache-Control", "no-cache");
+    response.setHeader("Cache-Control", "no-store");
+    response.setDateHeader("Expires", 0);
+    HttpSession sesion = request.getSession(false);
+    UsuarioDTO usuario = new UsuarioDTO();
+    if (sesion.getAttribute("user") == null) {
+        response.sendRedirect("GestionLogin");
+    } else {
+        usuario = (UsuarioDTO) sesion.getAttribute("user");
+    }
+%>
 <script>
     $(document).ready(function () {
         $("#mensaje").fadeOut(7000);
     });
 </script>
 <div class="row cajaPrincipal">
+    <div align="left"><a href="PreguntasRespuestas"><img src="images/back.png" alt="back"/></a></div> <br>
     <% if (request.getParameter("msg") != null) { %>
     <div id="mensaje" align="center" class="alert alert-info"><%out.print(request.getParameter("msg"));%></div>
     <% }%>
@@ -25,6 +37,7 @@
     <table class = "table table-striped table-bordered table-hover table-condensed" id="listar" >
         <thead>
             <tr>
+                <th>Usuario</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Telefono</th>
@@ -38,6 +51,7 @@
                 for (UsuarioDTO pdto : lista) {
             %>
             <tr>
+                <td><%=pdto.getUser()%></td>
                 <td><%=pdto.getNombre()%></td>
                 <td><%=pdto.getApellido()%></td>
                 <td><%=pdto.getTelefono()%></td>

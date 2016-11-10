@@ -13,10 +13,12 @@
         <link href="css/estilosIndex.css" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
         <!--jsp:include page="_header.jsp" /-->
+        <script>
+            $(document).ready(function () {
+                $("#mensaje").fadeOut(7000);
+            });
+        </script>
     </head>
-    <%
-        HttpSession miSession = request.getSession();
-    %>
     <body role="document" onload="if ('Navigator' == navigator.appName)
                 document.forms[0].reset();
             nobackbutton()">     
@@ -37,27 +39,15 @@
                         </div>    
                     </div> 
                     <div class="modal-body">
-                        <form class="form-horizontal login-form" name="formularioInicio" method="post" action="GestionLogin">
-
-                            <%
-                                String mensaje = (String) miSession.getAttribute("mensaje");
-                                miSession.removeAttribute("mensaje");
-                                if (mensaje != null) {
-
-                                    if (mensaje.equals("1")) {
-
-                            %>
-                            <div class="alert alert-danger">
-                                <button class="close" data-dismiss="alert"><span>&times;</span></button><strong>¡ALERTA!<br></strong>Usuario o Contraseña incorrectos.
-                            </div>
-                            <% }
-                                }
-                            %>
+                        <% if (request.getParameter("msg") != null) { %>
+                        <div id="mensaje" align="center" class="alert alert-warning"><%out.print(request.getParameter("msg"));%></div>
+                        <% }%>
+                        <form class="form-horizontal login-form" name="formularioInicio" method="post" action="GestionLogin?send">
                             <div class="form-group control-group">
                                 <label for="nombreUsuario"></label>
                                 <div class="input-group">
                                     <span class="input-group-addon glyphicon glyphicon-user"></span>
-                                    <input class="form-control" name="nombreUsuario" id="nombreUsuario" type="text"  placeholder= "Usuario" tabindex="1" required maxlength="35"  title="Digite su usuario"autocomplete="off" autofocus="">    
+                                    <input class="form-control" name="nombreUsuario" id="nombreUsuario" type="text"  placeholder= "Usuario" tabindex="1" required maxlength="35"  title="Digite su usuario" autocomplete="off" autofocus="">    
                                 </div>
                             </div>
                             <div class="form-group control-group">

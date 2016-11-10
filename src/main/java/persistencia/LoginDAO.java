@@ -22,9 +22,7 @@ public class LoginDAO {
     String mensaje = "";
 
     public LoginDTO Login(LoginDTO validaUsu, Connection conexion) throws SQLException {
-        LoginDTO unUsuarioNew = new LoginDTO();
-        boolean existeUsuario = false;
-
+        LoginDTO user = new LoginDTO();
         try {
             String query = "SELECT * from directorioactivo where nombreUsuario=? AND ContraseniaUsuario=?;";
             statement = conexion.prepareStatement(query);
@@ -34,16 +32,17 @@ public class LoginDAO {
             rs = statement.executeQuery();
 
             if (rs.next()) {
-                unUsuarioNew.setIdUsuario(rs.getInt("idUsuario"));
-                unUsuarioNew.setNombreUsuario(rs.getString("nombreUsuario"));
-                unUsuarioNew.setContraseniaUsuario(rs.getString("contraseniaUsuario"));
-                unUsuarioNew.setIdRol(rs.getInt("idRol"));
+                user.setIdUsuario(rs.getInt("idUsuario"));
+                user.setNombreUsuario(rs.getString("nombreUsuario"));
+                user.setContraseniaUsuario(rs.getString("contraseniaUsuario"));
+                user.setIdRol(rs.getInt("idRol"));
+                user.setValido(true);
             } else {
-                unUsuarioNew.setNombreUsuario("No en contrado");
+                user.setValido(false);
             }
         } catch (SQLException sqle) {
             System.out.println("ERROR: "+sqle.getMessage());
         }
-        return unUsuarioNew;
+        return user;
     }
 }
