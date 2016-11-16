@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.6.25-log)
-# Date: 2016-11-10 15:50:02
+# Date: 2016-11-16 12:46:13
 # Generator: MySQL-Front 5.3  (Build 4.214)
 
 /*!40101 SET NAMES utf8 */;
@@ -14,7 +14,7 @@ CREATE TABLE `directorioactivo` (
   `contraseniaUsuario` varchar(50) NOT NULL,
   `idRol` int(11) NOT NULL,
   PRIMARY KEY (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 #
 # Data for table "directorioactivo"
@@ -37,7 +37,7 @@ CREATE TABLE `estado_pregunta_respuesta` (
 # Data for table "estado_pregunta_respuesta"
 #
 
-INSERT INTO `estado_pregunta_respuesta` VALUES (1,'Sin Aprobar',NULL),(2,'Aprobada',NULL),(3,'Inactiva',NULL);
+INSERT INTO `estado_pregunta_respuesta` VALUES (1,'Sin Aprobar',NULL),(2,'Aprobada',NULL),(3,'Sin Publicar',NULL);
 
 #
 # Structure for table "estado_usuario"
@@ -47,7 +47,7 @@ CREATE TABLE `estado_usuario` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `estado` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "estado_usuario"
@@ -104,7 +104,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`Id_usuario`),
   KEY `Id_rol_idx` (`Id_rol`),
   CONSTRAINT `Id_rol` FOREIGN KEY (`Id_rol`) REFERENCES `roles` (`Id_rol`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=dec8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=dec8;
 
 #
 # Data for table "usuario"
@@ -139,7 +139,7 @@ CREATE TABLE `pregunta_respuesta` (
 # Data for table "pregunta_respuesta"
 #
 
-INSERT INTO `pregunta_respuesta` VALUES (2,'¿Como puedo ver las fechas de los grados?','Ingresando a www.poligran.edu.co opcion grados','2016-11-04','2016-11-30',NULL,NULL,2,'2016-12-31'),(3,'Cual es el proceso de admisiones','Debe inscribirse a través de la pagina www.poligran.edu.co/admisiones','2016-11-04','2016-11-30',NULL,NULL,2,'2016-12-31'),(4,'pregunta n','respuesta n','2016-11-04','2016-11-03',NULL,NULL,1,'2016-11-30'),(5,'pregunta 001','respuesta 001','2016-11-04','2016-11-11',NULL,NULL,1,'2016-11-25'),(6,'¿Como puedo ver mis notas?','entrando en www.poligran.edu.co/estudiantes con el usuario asignado en la opción calificaciones','2016-11-04','2016-11-03',NULL,NULL,1,'2016-11-30'),(7,'como puedo cambiar mi contraseña','En la opcion de gestion de cuenta','2016-11-10','2016-11-04',NULL,NULL,1,'2016-11-30'),(8,'otra pregunta','otra respuesta','2016-11-10','2016-11-09',NULL,NULL,3,'2016-11-30');
+INSERT INTO `pregunta_respuesta` VALUES (2,'¿Como puedo ver las fechas de los grados?','Ingresando a www.poligran.edu.co opcion grados','2016-11-04','2016-11-30',1,NULL,2,'2016-12-31'),(3,'Cual es el proceso de admisiones','Debe inscribirse a través de la pagina www.poligran.edu.co/admisiones','2016-11-04','2016-11-30',2,NULL,2,'2016-12-31'),(4,'pregunta n','respuesta n','2016-11-04','2016-11-03',1,NULL,1,'2016-11-30'),(5,'pregunta 001','respuesta 001','2016-11-04','2016-11-11',1,NULL,1,'2016-11-25'),(6,'¿Como puedo ver mis notas?','entrando en www.poligran.edu.co/estudiantes con el usuario asignado en la opción calificaciones','2016-11-04','2016-11-03',2,NULL,2,'2016-11-30'),(7,'como puedo cambiar mi contraseña','En la opcion de gestion de cuenta','2016-11-10','2016-11-04',1,NULL,2,'2016-11-30'),(8,'otra pregunta','otra respuesta','2016-11-10','2016-11-09',2,NULL,3,'2016-11-30'),(11,'¿Como aplico a una beca?','Entrando en www.poligran.edu.co/becas y diligenciando el formulario','2016-11-16','2016-11-02',3,NULL,1,'2016-11-30');
 
 #
 # Structure for table "comentario"
@@ -153,6 +153,7 @@ CREATE TABLE `comentario` (
   `Email_persona_comenta` varchar(100) DEFAULT NULL,
   `Id_padre_comentario` varchar(45) DEFAULT NULL,
   `Id_pregunta_respuesta` int(11) DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`Id_comentario`),
   KEY `Id_pregunta_respuesta_idx` (`Id_pregunta_respuesta`),
   CONSTRAINT `Id_pregunta_respuesta` FOREIGN KEY (`Id_pregunta_respuesta`) REFERENCES `pregunta_respuesta` (`Id_pregunta_respuesta`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -162,4 +163,4 @@ CREATE TABLE `comentario` (
 # Data for table "comentario"
 #
 
-INSERT INTO `comentario` VALUES (1,'Gracias, ya pude consultar mis notas','2016-11-07','juan','juan@juan.com',NULL,6),(2,'sigo sin poder ver mis notas, por favor necesito mas informacion','2016-11-07','Paola','paola@hotmail.com',NULL,6),(3,'tenia otra pregunta, gracias por otra respuesta','2016-11-10','Pepe','pepe@mail.com',NULL,8);
+INSERT INTO `comentario` VALUES (1,'Gracias, ya pude consultar mis notas','2016-11-07','juan','juan@juan.com',NULL,6,1),(2,'sigo sin poder ver mis notas, por favor necesito mas informacion','2016-11-07','Paola','paola@hotmail.com',NULL,6,1),(3,'tenia otra pregunta, gracias por otra respuesta','2016-11-10','Pepe','pepe@mail.com',NULL,8,1);

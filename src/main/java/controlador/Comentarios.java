@@ -29,6 +29,7 @@ public class Comentarios extends HttpServlet {
 
     FachadaPreguntas facadePR;
     DTOFactory dtoFactory;
+    public static int idComment; 
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,7 +52,7 @@ public class Comentarios extends HttpServlet {
         }
     }
 
-    public void nuevoComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion {
+    public void nuevoComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("sendComent") != null) {
             String respuesta = "";
             ComentarioDTO dto = new ComentarioDTO();
@@ -62,6 +63,26 @@ public class Comentarios extends HttpServlet {
             dto.setFechaComentario(String.valueOf(Utilities.getFechaActual()));
             respuesta = facadePR.insertarComentario(dto);
             response.sendRedirect("Consultar?msg=" + respuesta);
+        } else {
+           aprobarComentario(request, response);
+        }
+    }
+    
+    public void aprobarComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("approve") != null) {
+            String id = request.getParameter("approve");
+            facadePR.cambiarEstadoComentario(id, 1);
+            response.sendRedirect("PreguntasRespuestas?commentsId=" + idComment);
+        } else {
+            desaprobarComentario(request, response);
+        }
+    }
+
+    public void desaprobarComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("disapprove") != null) {
+            String id = request.getParameter("disapprove");
+            facadePR.cambiarEstadoComentario(id, 0);
+            response.sendRedirect("PreguntasRespuestas?commentsId=" + idComment);
         } else {
             response.sendRedirect("Consultar");
         }

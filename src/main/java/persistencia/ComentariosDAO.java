@@ -28,7 +28,7 @@ public class ComentariosDAO {
     public ArrayList<ComentarioDTO> listarComentarios(Connection conexion, int id) throws MiExcepcion {
         ArrayList<ComentarioDTO> listaComentarios = new ArrayList();
         try {
-            String query = "SELECT  Id_comentario, Contenido_comentario, Nombre_presona_comenta, Email_persona_comenta, Id_pregunta_respuesta, Fecha_comentario "
+            String query = "SELECT  Id_comentario, Contenido_comentario, Nombre_presona_comenta, Email_persona_comenta, Id_pregunta_respuesta, Fecha_comentario, activo "
                     + "FROM comentario WHERE Id_pregunta_respuesta=?;";
             statement = conexion.prepareStatement(query);
             statement.setInt(1, id);
@@ -41,6 +41,7 @@ public class ComentariosDAO {
                 comentario.setEmailComentarista(rs.getString(4));
                 comentario.setIdPreguntaRespuesta(rs.getInt(5));
                 comentario.setFechaComentario(rs.getString(6));
+                comentario.setActivo(Integer.parseInt(rs.getString(7))==1?true:false);
                 listaComentarios.add(comentario);
             }
         } catch (SQLException sqlexception) {
@@ -95,6 +96,32 @@ public class ComentariosDAO {
 
             } else {
                 respuesta = "se ha eliminado";
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error de MySQL: " + ex.getMessage());
+        }
+        return respuesta;
+    }
+    
+     public String cambiarEstadoComentario(String id, Connection conexion, int estado) {
+        int resultado = 0;
+        String respuesta = "";
+        String sql = "UPDATE comentario set activo=? "
+                + "WHERE Id_comentario = ?;";
+        try {
+            statement = conexion.prepareStatement(sql);
+            statement.setInt(1, estado);
+            statement.setString(2, id);
+
+            resultado = statement.executeUpdate();
+
+            //comprobar si se ejecuto la instruccion en sql
+            if (resultado != 0) {
+                respuesta = "cambiada correctamente";
+
+            } else {
+                respuesta = "se ha cambiado";
             }
 
         } catch (SQLException ex) {

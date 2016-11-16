@@ -20,6 +20,7 @@ public class PreguntaRespuestaDTO {
     private String inicioVigencia;
     private String finVigencia;
     private int idUsuario;
+    private String usuario;
     private int idFacultad; 
     private String estado;
     private int codigoEstado;
@@ -86,6 +87,14 @@ public class PreguntaRespuestaDTO {
         this.idUsuario = idUsuario;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    
     public int getIdFacultad() {
         return idFacultad;
     }

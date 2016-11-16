@@ -56,9 +56,10 @@ public class PreguntaRespuestaDAO {
     public ArrayList<PreguntaRespuestaDTO> listarTodo(Connection conexion) throws MiExcepcion {
         ArrayList<PreguntaRespuestaDTO> listaPreguntas = new ArrayList();
         try {
-            String query = "SELECT  Id_pregunta_respuesta, Contenido_pregunta, Contenido_respuesta, Fecha_creacion, inicio_vigencia, fin_vigencia, Nombre_estado, Id_estado_pregunta  "
+            String query = "SELECT  Id_pregunta_respuesta, Contenido_pregunta, Contenido_respuesta, Fecha_creacion, inicio_vigencia, fin_vigencia, Nombre_estado, Id_estado_pregunta, user  "
                     + "FROM pregunta_respuesta "
-                    + "INNER JOIN estado_pregunta_respuesta ON(pregunta_respuesta.Id_estado_pregunta=estado_pregunta_respuesta.Id_estado_pregunta_respuesta)"
+                    + "INNER JOIN estado_pregunta_respuesta ON(pregunta_respuesta.Id_estado_pregunta=estado_pregunta_respuesta.Id_estado_pregunta_respuesta) "
+                    + "INNER JOIN usuario ON(pregunta_respuesta.Id_usuario=usuario.Id_usuario) "
                     + "ORDER BY Id_pregunta_respuesta DESC";
             statement = conexion.prepareStatement(query);
             rs = statement.executeQuery();
@@ -72,6 +73,7 @@ public class PreguntaRespuestaDAO {
                 pr.setFinVigencia(rs.getString(6));
                 pr.setEstado(rs.getString(7));
                 pr.setCodigoEstado(rs.getInt(8));
+                pr.setUsuario(rs.getString(9));
                 listaPreguntas.add(pr);
             }
         } catch (SQLException sqlexception) {
@@ -108,7 +110,7 @@ public class PreguntaRespuestaDAO {
     public String crearRegistro(PreguntaRespuestaDTO prDto, Connection conexion) {
         int resultado = 0;
         String respuesta = "";
-        String sql = "INSERT INTO pregunta_respuesta(Contenido_pregunta, Contenido_respuesta, inicio_vigencia,  fin_vigencia, Fecha_creacion, Id_estado_pregunta) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pregunta_respuesta(Contenido_pregunta, Contenido_respuesta, inicio_vigencia,  fin_vigencia, Fecha_creacion, Id_estado_pregunta, Id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             Random r = new Random();
             statement = conexion.prepareStatement(sql);
@@ -119,6 +121,8 @@ public class PreguntaRespuestaDAO {
             statement.setString(5, prDto.getFecha());
             //estado por defecto incativa
             statement.setInt(6, 1);
+            statement.setInt(7, prDto.getIdUsuario());
+            System.out.println("ID USER: " + prDto.getIdUsuario());
             resultado = statement.executeUpdate();
             if (resultado != 0) {
                 respuesta = "Registro correcto";

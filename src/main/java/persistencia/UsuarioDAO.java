@@ -80,21 +80,22 @@ public class UsuarioDAO {
     public UsuarioDTO detallesUsuario(Connection conexion, String user) throws MiExcepcion {
         UsuarioDTO userDTO = new UsuarioDTO();
         try {
-            String query = "SELECT  Nombre_usuario, Apellido_usuario, Telefono_usuario, id_estado_usuario, usuario.Id_rol, Nombre_rol, Aprobar_pregunta_usuario, user "
+            String query = "SELECT  Id_usuario, Nombre_usuario, Apellido_usuario, Telefono_usuario, id_estado_usuario, usuario.Id_rol, Nombre_rol, Aprobar_pregunta_usuario, user "
                     + "FROM usuario INNER JOIN roles ON(usuario.Id_rol=roles.Id_rol)"
                     + "WHERE user = ?";
             statement = conexion.prepareStatement(query);
             statement.setString(1, user);
             rs = statement.executeQuery();
             if (rs.next()) {
-                userDTO.setNombre(rs.getString(1));
-                userDTO.setApellido(rs.getString(2));
-                userDTO.setTelefono(rs.getString(3));
-                userDTO.setIdEstado(rs.getInt(4));
-                userDTO.setIdRol(rs.getInt(5));
-                userDTO.setRol(rs.getString(6));
-                userDTO.setAprobarPregunta(rs.getInt(7) == 0? false : true);
-                userDTO.setUser(rs.getString(8));
+                userDTO.setId(rs.getInt(1));
+                userDTO.setNombre(rs.getString(2));
+                userDTO.setApellido(rs.getString(3));
+                userDTO.setTelefono(rs.getString(4));
+                userDTO.setIdEstado(rs.getInt(5));
+                userDTO.setIdRol(rs.getInt(6));
+                userDTO.setRol(rs.getString(7));
+                userDTO.setAprobarPregunta(rs.getInt(8) == 0? false : true);
+                userDTO.setUser(rs.getString(9));
             } else{
                 //si no lo encuentra lo deja como inactivo
                 userDTO.setIdEstado(2);

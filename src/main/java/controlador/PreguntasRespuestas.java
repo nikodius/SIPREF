@@ -13,12 +13,14 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.ComentarioDTO;
 import modelo.PreguntaRespuestaDTO;
 import utilidades.MiExcepcion;
 import utilidades.Utilities;
@@ -78,6 +80,7 @@ public class PreguntasRespuestas extends HttpServlet {
             dto.setInicioVigencia(request.getParameter("inputInicio"));
             dto.setFinVigencia(request.getParameter("inputFin"));
             dto.setFecha(String.valueOf(Utilities.getFechaActual()));
+            dto.setIdUsuario(Integer.parseInt(request.getParameter("idUser")));
             String respuesta = facadePR.insertarRespuesta(dto);
             response.sendRedirect("PreguntasRespuestas?msg=" + respuesta);
         } else {
@@ -131,6 +134,18 @@ public class PreguntasRespuestas extends HttpServlet {
             PreguntaRespuestaDTO pr = facadePR.detallesPreguntaRespuesta(id);
             request.setAttribute("preguntaRespuesta", pr);
             request.getRequestDispatcher("editFAQ.jsp").forward(request, response);
+        } else {
+            redirectComentariosPregunta(request, response);
+        }
+    }
+    
+    public void redirectComentariosPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
+        if (request.getParameter("commentsId") != null) {
+            int id = Integer.parseInt(request.getParameter("commentsId"));
+            Comentarios.idComment = id;
+            List<ComentarioDTO> comentarios = facadePR.listarComentarios(id);
+            request.setAttribute("listaComentarios", comentarios);
+            request.getRequestDispatcher("comments.jsp").forward(request, response);
         } else {
             actualizarPregunta(request, response);
         }

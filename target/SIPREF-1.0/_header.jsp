@@ -44,17 +44,19 @@
                                             <h5 class=""><strong>SISTEMA DE INFORMACION DE PREGUNTAS Y RESPUESTAS FRECUENTES</strong></h5>
                                             <h4>SIPREF</h4>
                                         </div>
+                                        <% if (usuario.getUser() != null) {%>
                                         <div class="col-xs-2 col-sm-2">
                                             <div id="datos" align="center" class="">
-                                                
-                                                    <span>Bienvenido <% out.print(usuario.getUser());%></span><br>
-                                                    <span>Rol <% out.print(usuario.getRol());%></span>
-                                                
+
+                                                <span>Bienvenido <% out.print(usuario.getUser());%></span><br>
+                                                <span><% out.print(usuario.getRol());%></span>
+
                                                 <form name="logout" action="GestionLogin" id="form1">
                                                     <input id="salir" type="submit" name="logout" class="btn btn-danger" value="Cerrar Sesión"/>
                                                 </form>
                                             </div>
                                         </div>
+                                        <%}%>             
                                     </center>
                                 </div>    
                             </div> 

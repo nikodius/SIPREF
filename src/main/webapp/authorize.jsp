@@ -27,7 +27,16 @@
     });
 </script>
 <div class="row cajaPrincipal">
-    <div align="left"><a href="PreguntasRespuestas"><img src="images/back.png" alt="back"/></a></div> <br>
+    <nav>
+        <ul>
+            <li><a href="PreguntasRespuestas">Preguntas Respuestas</a></li>
+            <li><a class="active" href="Autores">Permiso Aprobación</a></li>
+            <li><a href="#">Usuarios</a></li>
+            <li><a href="#">Historial Modificaciones</a></li>
+        </ul>
+    </nav>
+    <br/>
+    <!--div align="left"><a href="PreguntasRespuestas"><img src="images/back.png" alt="back"/></a></div> <br-->
     <% if (request.getParameter("msg") != null) { %>
     <div id="mensaje" align="center" class="alert alert-info"><%out.print(request.getParameter("msg"));%></div>
     <% }%>

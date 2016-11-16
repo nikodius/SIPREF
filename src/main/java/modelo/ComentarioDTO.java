@@ -20,6 +20,7 @@ public class ComentarioDTO {
     private String emailComentarista;
     private int idPadre;
     private int idPreguntaRespuesta;
+    private boolean activo;
 
     public ComentarioDTO() {
     }
@@ -90,6 +91,14 @@ public class ComentarioDTO {
 
     public void setIdPreguntaRespuesta(int idPreguntaRespuesta) {
         this.idPreguntaRespuesta = idPreguntaRespuesta;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
     
     

@@ -51,6 +51,11 @@ public class FachadaPreguntas {
         }
         return preguntas;
     }
+    
+    public List<ComentarioDTO> listarComentarios(int id) throws MiExcepcion{
+        ArrayList<ComentarioDTO> comentarios = cdao.listarComentarios(conexion, id);
+        return comentarios;
+    }
      
     public String cambiarEstadoPreguntaRespuesta(String id, int estado) throws MiExcepcion{
         return prdao.cambiarEstadoPregunta(id, conexion, estado);
@@ -68,4 +73,7 @@ public class FachadaPreguntas {
         return cdao.crearRegistro(cdto, conexion);
     }
     
+    public String cambiarEstadoComentario(String id, int estado) throws MiExcepcion{
+        return cdao.cambiarEstadoComentario(id, conexion, estado);
+    }
 }

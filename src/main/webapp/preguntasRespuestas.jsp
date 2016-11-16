@@ -34,13 +34,21 @@
     <% }%>
 
     <% if (usuario.getIdRol() == 1) {%>
-    <div><a href="Autores">Permiso aprobacion</a></div>
+    <nav>
+        <ul>
+            <li><a class="active" href="PreguntasRespuestas">Preguntas Respuestas</a></li>
+            <li><a href="Autores">Permiso Aprobación</a></li>
+            <li><a href="#">Usuarios</a></li>
+            <li><a href="#">Historial Modificaciones</a></li>
+        </ul>
+    </nav>
+    <br>
     <% } %>
 
     <%if (request.getAttribute("listPreguntas") != null) {
             List<PreguntaRespuestaDTO> lista = (ArrayList) request.getAttribute("listPreguntas");
     %>
-    <div align="right"><a href="PreguntasRespuestas?add"><img src="images/add.png" id="imgEX" alt="Modificar Registro"/></a></div>
+    <div align="right"><a href="PreguntasRespuestas?add"><img src="images/add.png" id="imgEX" alt="Modificar Registro"/> Nueva Pregunta</a></div>
     <table class = "table table-striped table-bordered table-hover table-condensed" id="listarNotas" >
         <thead>
             <tr>
@@ -49,12 +57,14 @@
                 <th>Inicio Vigencia</th>
                 <th>Fin Vigencia</th>
                 <th>Estado</th>
+                <th>Autor</th>
                 <th>Editar</th>
+                <th>Comentarios</th>
                     <% if (usuario.isAprobarPregunta()) { %>
                 <th>Aprobar</th>
                     <% } %>
                     <% if (usuario.getIdRol() == 1) {%>
-                <th>Activar</th>
+                <th>Publicar</th>
                     <% } %>
             </tr>
         </thead>
@@ -68,8 +78,12 @@
                 <td><%=pdto.getInicioVigencia()%></td>
                 <td><%=pdto.getFinVigencia()%></td>
                 <td><%=pdto.getEstado()%></td>
+                <td><%=pdto.getUsuario()%></td>
                 <td>
                     <a href="PreguntasRespuestas?editId=<% out.print(pdto.getId());%>"><img src="images/edit.png" id="imgEX" alt="Modificar Registro"/></a>
+                </td>
+                <td>
+                    <a href="PreguntasRespuestas?commentsId=<% out.print(pdto.getId());%>"><img src="images/comment.png" id="imgEX" alt="Modificar Registro"/></a>
                 </td>
 
                 <% if (usuario.isAprobarPregunta()) {
@@ -88,7 +102,7 @@
                         <%} else {%>
                 <td><a href="PreguntasRespuestas?deactivate=<% out.print(pdto.getId());%>"><img src="images/disactivate.png" alt="disactivate"/></a></td>
                         <%}%>
-                <%}%>
+                        <%}%>
             </tr>
             <%}%>
         </tbody>
