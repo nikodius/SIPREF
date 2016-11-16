@@ -12,6 +12,8 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/estilosIndex.css" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+        <script src="js/bootstrap.js"></script>
         <!--jsp:include page="_header.jsp" /-->
         <script>
             $(document).ready(function () {
@@ -29,7 +31,7 @@
                         <div class="row">
                             <center>
                                 <div class="col-xs-12 col-sm-3">
-                                    <img src="images/Logo.PNG" alt="logo" width="150" height="80"/>
+                                    <a href="http://www.poli.edu.co/"><img src="images/Logo.PNG" alt="logo" width="150" height="80"/></a>
                                 </div>
                                 <div class="col-xs-12 col-sm-9">
                                     <h4 class=""><strong>SISTEMA DE INFORMACION DE PREGUNTAS Y RESPUESTAS FRECUENTES</strong></h4>
@@ -59,7 +61,7 @@
                             </div>
                             <div class="col-xs-offset-1 col-md-offset-1">
                                 <article class="post clearfix">
-                                    <div class="contenedor-botones">
+                                    <div align="center" class="contenedor-botones">
                                         <!--button class="btn btn-primary" type="submit" name="enviar" value="Ingresar">Iniciar Sesión <span class="glyphicon glyphicon-ok-sign"></span></button-->
                                         <button class="btn btn-lg btn-primary pull" type="submit" name="enviar" value="Ingresar" tabindex="3">Iniciar Sesión <i class="fa fa-arrow-circle-right"></i></button>
                                     </div>
@@ -68,8 +70,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <div class="col-xs-12" id="texto">
-                            <p id="h2">®Copyright 2016. All Rights Reserved. SIPREF</p>
+                        <div align="center" class="col-xs-12" id="texto">
+                            SIPREF - Proyecto Politecnico Grancolombiano
                         </div>
                     </div>
                 </div>

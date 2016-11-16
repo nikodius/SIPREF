@@ -102,7 +102,7 @@ public class GestionLogin extends HttpServlet {
             HttpSession sesion = request.getSession(false);
             sesion.invalidate();
             sesion = null;
-            response.sendRedirect("GestionLogin");
+            response.sendRedirect("index.jsp");
         } else {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }

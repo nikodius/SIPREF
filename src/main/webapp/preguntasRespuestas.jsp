@@ -9,7 +9,6 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <jsp:include page="_header.jsp" />
 <% response.setHeader("Cache-Control", "no-cache");
     response.setHeader("Cache-Control", "no-store");
@@ -22,10 +21,16 @@
         usuario = (UsuarioDTO) sesion.getAttribute("user");
     }
 %> 
-
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<script src="js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("#mensaje").fadeOut(7000);
+        $('#tablerPR').DataTable({
+            language: {
+                url: 'js/Spanish.json'
+            }
+        });
+        $("#mensaje").fadeOut(7000); 
     });
 </script>
 <div class="row cajaPrincipal">
@@ -49,7 +54,8 @@
             List<PreguntaRespuestaDTO> lista = (ArrayList) request.getAttribute("listPreguntas");
     %>
     <div align="right"><a href="PreguntasRespuestas?add"><img src="images/add.png" id="imgEX" alt="Modificar Registro"/> Nueva Pregunta</a></div>
-    <table class = "table table-striped table-bordered table-hover table-condensed" id="listarNotas" >
+    <br/>
+    <table class = "table table-striped table-bordered table-hover table-condensed" id="tablerPR" >
         <thead>
             <tr>
                 <th>Pregunta</th>

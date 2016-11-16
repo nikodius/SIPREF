@@ -122,7 +122,6 @@ public class PreguntaRespuestaDAO {
             //estado por defecto incativa
             statement.setInt(6, 1);
             statement.setInt(7, prDto.getIdUsuario());
-            System.out.println("ID USER: " + prDto.getIdUsuario());
             resultado = statement.executeUpdate();
             if (resultado != 0) {
                 respuesta = "Registro correcto";

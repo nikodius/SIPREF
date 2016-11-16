@@ -13,7 +13,6 @@
 <%@page import="facade.FachadaPreguntas"%>
 <%@page import="modelo.PreguntaRespuestaDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <jsp:include page="_header.jsp" />
 <% response.setHeader("Cache-Control", "no-cache");
     response.setHeader("Cache-Control", "no-store");
@@ -26,12 +25,23 @@
         usuario = (UsuarioDTO) sesion.getAttribute("user");
     }
 %>
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<script src="js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#tablerPR').DataTable({
+            language: {
+                url: 'js/Spanish.json'
+            }
+        });
+    });
+</script>
 <%if (request.getAttribute("listaComentarios") != null) {
         List<ComentarioDTO> lista = (ArrayList) request.getAttribute("listaComentarios");
 %>
 <div class="cajaPrincipal">
     <div align="left"><a href="PreguntasRespuestas"><img src="images/back.png" alt="back"/></a></div>
-    <table class = "table table-striped table-bordered table-hover table-condensed" id="listarNotas" >
+    <table class = "table table-striped table-bordered table-hover table-condensed" id="tablerPR" >
         <thead>
             <tr>
                 <th>Comentario</th>

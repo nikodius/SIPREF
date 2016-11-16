@@ -8,8 +8,9 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <jsp:include page="_header.jsp" />
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<script src="js/jquery.dataTables.min.js"></script>
 <% response.setHeader("Cache-Control", "no-cache");
     response.setHeader("Cache-Control", "no-store");
     response.setDateHeader("Expires", 0);
@@ -24,6 +25,11 @@
 <script>
     $(document).ready(function () {
         $("#mensaje").fadeOut(7000);
+        $('#tableUser').DataTable({
+            language: {
+                url: 'js/Spanish.json'
+            }
+        });
     });
 </script>
 <div class="row cajaPrincipal">
@@ -43,7 +49,7 @@
     <%if (request.getAttribute("listAutores") != null) {
             List<UsuarioDTO> lista = (ArrayList) request.getAttribute("listAutores");
     %>
-    <table class = "table table-striped table-bordered table-hover table-condensed" id="listar" >
+    <table class = "table table-striped table-bordered table-hover table-condensed" id="tableUser" >
         <thead>
             <tr>
                 <th>Usuario</th>

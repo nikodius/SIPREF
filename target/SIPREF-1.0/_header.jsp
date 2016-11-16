@@ -31,14 +31,14 @@
                     }
                 %> 
 
-                <div class="container" role="dialog">   
+                <div >   
                     <div class="modal-dialog-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <div class="row">
                                     <center>
                                         <div class="col-xs-12 col-sm-2">
-                                            <img src="images/Logo.PNG" alt="logo" width="150" height="80"/>
+                                            <a href="http://www.poli.edu.co/"><img src="images/Logo.PNG" alt="logo" width="150" height="80"/></a>
                                         </div>
                                         <div class="col-xs-10 col-sm-8">
                                             <h5 class=""><strong>SISTEMA DE INFORMACION DE PREGUNTAS Y RESPUESTAS FRECUENTES</strong></h5>
@@ -56,7 +56,12 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <%}%>             
+                                        <%} else {%>  
+                                        
+                                        <div class="col-xs-1 col-sm-1 btnIngresar">
+                                            <a id="aLogin" href="GestionLogin"><i class="fa fa-user" aria-hidden="true"> Ingresar</i></a>
+                                        </div>
+                                        <%}%>       
                                     </center>
                                 </div>    
                             </div> 
