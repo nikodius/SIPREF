@@ -5,7 +5,7 @@
  */
 package controlador;
 
-import Factory.DTOFactory;
+import Factory.FactoryDTO;
 import facade.FachadaPreguntas;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,7 +23,7 @@ import modelo.PreguntaRespuestaDTO;
 public class Consultar extends HttpServlet {
 
     FachadaPreguntas facadePR;
-    DTOFactory dtoFactory;
+    FactoryDTO dtoFactory;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

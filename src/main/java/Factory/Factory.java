@@ -1,6 +1,6 @@
 package Factory;
 
-import modelo.PreguntaRespuestaDTO;
+import modelo.*;
 
 
 /**
@@ -10,4 +10,8 @@ import modelo.PreguntaRespuestaDTO;
 public interface Factory {
     
     PreguntaRespuestaDTO crearPreguntaRespuesta(); 
+    HistorialDTO crearHistorial(); 
+    LoginDTO crearLogin(); 
+    ComentarioDTO crearComentario(); 
+    UsuarioDTO crearUsuario(); 
 }

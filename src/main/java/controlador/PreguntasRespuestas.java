@@ -5,7 +5,7 @@
  */
 package controlador;
 
-import Factory.DTOFactory;
+import Factory.FactoryDTO;
 import facade.FachadaPreguntas;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,7 +34,7 @@ import utilidades.Utilities;
 public class PreguntasRespuestas extends HttpServlet {
 
     FachadaPreguntas facadePR;
-    DTOFactory dtoFactory;
+    FactoryDTO dtoFactory;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -76,7 +76,7 @@ public class PreguntasRespuestas extends HttpServlet {
 
     public void nuevaPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("new") != null) {
-            PreguntaRespuestaDTO dto = new PreguntaRespuestaDTO();
+            PreguntaRespuestaDTO dto = dtoFactory.crearPreguntaRespuesta();
             dto.setPregunta(request.getParameter("inputQuestion"));
             dto.setRespuesta(request.getParameter("inputAnswer"));
             dto.setInicioVigencia(request.getParameter("inputInicio"));

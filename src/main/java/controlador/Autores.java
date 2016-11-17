@@ -5,7 +5,7 @@
  */
 package controlador;
 
-import Factory.DTOFactory;
+import Factory.FactoryDTO;
 import facade.FachadaPreguntas;
 import facade.FachadaUsuarios;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import utilidades.MiExcepcion;
 public class Autores extends HttpServlet {
 
     FachadaUsuarios facadeU;
-    DTOFactory dtoFactory;
+    FactoryDTO dtoFactory;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
