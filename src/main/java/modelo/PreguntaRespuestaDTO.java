@@ -36,9 +36,7 @@ public class PreguntaRespuestaDTO {
         this.inicioVigencia = inicioVigencia;
         this.finVigencia = finVigencia;
     }
-    
-    
-    
+ 
     public int getId() {
         return id;
     }

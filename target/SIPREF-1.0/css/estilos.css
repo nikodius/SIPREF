@@ -10,14 +10,14 @@
 }
 
 .cajaPrincipal{
-   padding: 2% 5% 5% 5%; 
-   min-height: 400px;
+    padding: 2% 5% 5% 5%; 
+    min-height: 450px;
 }
 .panelHeader{
     color: #fff;
     padding-top: 2%;
     padding-bottom: 2%;
-   background-color: #0074d9; 
+    background-color: #0074d9; 
 }
 
 #aLogin{
@@ -62,5 +62,13 @@ nav li a:hover:not(.active) {
 nav li a.active {
     color: white;
     background-color: #0D5494;
+}
+
+footer {
+    background-color: #0D5494;
+    color: #fff;
+    width: 100%;
+    bottom: 0;
+    font-size: 0.9em;
 }
 

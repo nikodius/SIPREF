@@ -57,7 +57,6 @@
                                             </div>
                                         </div>
                                         <%} else {%>  
-                                        
                                         <div class="col-xs-1 col-sm-1 btnIngresar">
                                             <a id="aLogin" href="GestionLogin"><i class="fa fa-user" aria-hidden="true"> Ingresar</i></a>
                                         </div>

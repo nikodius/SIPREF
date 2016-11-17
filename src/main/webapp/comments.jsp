@@ -63,9 +63,9 @@
                 <td><%=pdto.getFechaComentario()%></td>
                 <td><%=pdto.isActivo() ? "Activo" : "Inactivo"%></td>
                 <% if (pdto.isActivo()) {%>
-                <td><a href="Comentarios?disapprove=<% out.print(pdto.getIdComentario());%>"><img src="images/disapprove.png" alt="disapprove"/></a></td>
+                <td><a href="Comentarios?disapprove=<% out.print(pdto.getIdComentario());%>&comentario=<% out.print(pdto.getContenido());%>&user=<% out.print(usuario.getUser());%>"><img src="images/disapprove.png" alt="disapprove"/></a></td>
                         <%} else {%>
-                <td><a href="Comentarios?approve=<% out.print(pdto.getIdComentario());%>"><img src="images/approve.png" alt="approve"/></a></td>
+                <td><a href="Comentarios?approve=<% out.print(pdto.getIdComentario());%>&comentario=<% out.print(pdto.getContenido());%>&user=<% out.print(usuario.getUser());%>"><img src="images/approve.png" alt="approve"/></a></td>
                         <%} %>
             </tr>
             <%}%>

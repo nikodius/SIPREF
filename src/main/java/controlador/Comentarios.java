@@ -9,6 +9,7 @@ import Factory.DTOFactory;
 import facade.FachadaPreguntas;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.ComentarioDTO;
+import modelo.HistorialDTO;
 import utilidades.MiExcepcion;
 import utilidades.Utilities;
 
@@ -73,6 +75,8 @@ public class Comentarios extends HttpServlet {
             String id = request.getParameter("approve");
             facadePR.cambiarEstadoComentario(id, 1);
             response.sendRedirect("PreguntasRespuestas?commentsId=" + idComment);
+            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "aprobó el comentario: " + request.getParameter("comentario"), String.valueOf(new Date()));
+            facadePR.insertarHistorial(hdto);
         } else {
             desaprobarComentario(request, response);
         }
@@ -83,6 +87,8 @@ public class Comentarios extends HttpServlet {
             String id = request.getParameter("disapprove");
             facadePR.cambiarEstadoComentario(id, 0);
             response.sendRedirect("PreguntasRespuestas?commentsId=" + idComment);
+            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "desaprobó el comentario: " + request.getParameter("comentario"), String.valueOf(new Date()));
+            facadePR.insertarHistorial(hdto);
         } else {
             response.sendRedirect("Consultar");
         }

@@ -16,10 +16,13 @@
     response.setDateHeader("Expires", 0);
     HttpSession sesion = request.getSession(false);
     UsuarioDTO usuario = new UsuarioDTO();
-    if (sesion.getAttribute("user") == null) {
-        response.sendRedirect("GestionLogin");
-    } else {
+    if (sesion.getAttribute("user") != null) {
         usuario = (UsuarioDTO) sesion.getAttribute("user");
+        if (usuario.getIdRol() != 1) {
+            response.sendRedirect("PreguntasRespuestas");
+        }
+    } else {
+        response.sendRedirect("GestionLogin");
     }
 %>
 <script>
@@ -38,7 +41,7 @@
             <li><a href="PreguntasRespuestas">Preguntas Respuestas</a></li>
             <li><a class="active" href="Autores">Permiso Aprobación</a></li>
             <li><a href="#">Usuarios</a></li>
-            <li><a href="#">Historial Modificaciones</a></li>
+            <li><a href="Historial">Historial Modificaciones</a></li>
         </ul>
     </nav>
     <br/>

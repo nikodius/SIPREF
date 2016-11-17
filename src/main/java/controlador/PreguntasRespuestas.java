@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.ComentarioDTO;
+import modelo.HistorialDTO;
 import modelo.PreguntaRespuestaDTO;
+import persistencia.HistorialDAO;
 import utilidades.MiExcepcion;
 import utilidades.Utilities;
 
@@ -82,6 +84,9 @@ public class PreguntasRespuestas extends HttpServlet {
             dto.setFecha(String.valueOf(Utilities.getFechaActual()));
             dto.setIdUsuario(Integer.parseInt(request.getParameter("idUser")));
             String respuesta = facadePR.insertarRespuesta(dto);
+            //historial
+            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "creo nueva pregunta: " + dto.getPregunta(), String.valueOf(new Date()));
+            facadePR.insertarHistorial(hdto);
             response.sendRedirect("PreguntasRespuestas?msg=" + respuesta);
         } else {
             desactivarPregunta(request, response);
@@ -93,6 +98,8 @@ public class PreguntasRespuestas extends HttpServlet {
             String id = request.getParameter("deactivate");
             facadePR.cambiarEstadoPreguntaRespuesta(id, 3);
             response.sendRedirect("PreguntasRespuestas");
+            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "inactivó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date()));
+            facadePR.insertarHistorial(hdto);
         } else {
             activarPregunta(request, response);
         }
@@ -103,6 +110,8 @@ public class PreguntasRespuestas extends HttpServlet {
             String id = request.getParameter("active");
             facadePR.cambiarEstadoPreguntaRespuesta(id, 1);
             response.sendRedirect("PreguntasRespuestas");
+            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "publicó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date()));
+            facadePR.insertarHistorial(hdto);
         } else {
             aprobarPregunta(request, response);
         }
@@ -113,6 +122,8 @@ public class PreguntasRespuestas extends HttpServlet {
             String id = request.getParameter("approve");
             facadePR.cambiarEstadoPreguntaRespuesta(id, 2);
             response.sendRedirect("PreguntasRespuestas");
+            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "aprobó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date()));
+            facadePR.insertarHistorial(hdto);
         } else {
             desaprobarPregunta(request, response);
         }
@@ -123,6 +134,8 @@ public class PreguntasRespuestas extends HttpServlet {
             String id = request.getParameter("disapprove");
             facadePR.cambiarEstadoPreguntaRespuesta(id, 1);
             response.sendRedirect("PreguntasRespuestas");
+            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "desaprobó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date()));
+            facadePR.insertarHistorial(hdto);
         } else {
             redirectEditarPregunta(request, response);
         }
@@ -157,6 +170,8 @@ public class PreguntasRespuestas extends HttpServlet {
             PreguntaRespuestaDTO pr = new PreguntaRespuestaDTO(request.getParameter("inputQuestion"), request.getParameter("inputAnswer"), request.getParameter("inputInicio"), request.getParameter("inputFin"));
             respuesta = facadePR.editarPreguntaRespuesta(pr, Integer.parseInt(request.getParameter("idPr")));
             response.sendRedirect("PreguntasRespuestas?&msg=" + respuesta);
+            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "edito la pregunta: " + request.getParameter("inputQuestion"), String.valueOf(new Date()));
+            facadePR.insertarHistorial(hdto);
         } else {
             response.sendRedirect("PreguntasRespuestas");
         }

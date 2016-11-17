@@ -6,7 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <footer>
-    <section id="contacto">SIPREF - Proyecto Politecnico Grancolombiano</section>
+    <section>SIPREF - Proyecto realizado para la institución universitaria Politécnico Grancolombiano</section>
+    <section>Grupo S162-4822740A Enfasis Profesionas e Ingenieria de software II</section>
 </footer>
 </div>
 </body>

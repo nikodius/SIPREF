@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.6.25-log)
-# Date: 2016-11-16 12:46:13
+# Date: 2016-11-17 12:17:07
 # Generator: MySQL-Front 5.3  (Build 4.214)
 
 /*!40101 SET NAMES utf8 */;
@@ -72,6 +72,24 @@ CREATE TABLE `facultad` (
 
 
 #
+# Structure for table "historial"
+#
+
+CREATE TABLE `historial` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` varchar(255) DEFAULT NULL,
+  `accion` varchar(255) DEFAULT NULL,
+  `fecha` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "historial"
+#
+
+INSERT INTO `historial` VALUES (3,'admin','edito la pregunta como puedo cambiar mi contraseña','Thu Nov 17 10:46:58 COT 2016'),(12,'admin','desaprobó la pregunta:como puedo cambiar mi contraseña','Thu Nov 17 10:52:40 COT 2016'),(13,'admin','aprobó la pregunta:como puedo cambiar mi contraseña','Thu Nov 17 10:52:46 COT 2016'),(14,'admin','desaprobó la pregunta:como puedo cambiar mi contraseña','Thu Nov 17 10:52:47 COT 2016'),(15,'admin','inactivó la pregunta:como puedo cambiar mi contraseña','Thu Nov 17 10:52:49 COT 2016'),(16,'admin','publicó la pregunta:como puedo cambiar mi contraseña','Thu Nov 17 10:52:50 COT 2016'),(17,'admin','aprobó la pregunta:como puedo cambiar mi contraseña','Thu Nov 17 10:52:52 COT 2016'),(18,'admin','creo nueva pregunta: pregunta pendiente','Thu Nov 17 10:53:45 COT 2016');
+
+#
 # Structure for table "roles"
 #
 
@@ -133,13 +151,13 @@ CREATE TABLE `pregunta_respuesta` (
   CONSTRAINT `Id_estado_pregunta_respuesta` FOREIGN KEY (`Id_estado_pregunta`) REFERENCES `estado_pregunta_respuesta` (`Id_estado_pregunta_respuesta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `Id_facultad` FOREIGN KEY (`Id_facultad`) REFERENCES `facultad` (`Id_Facultad`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `Id_usuario` FOREIGN KEY (`Id_usuario`) REFERENCES `usuario` (`Id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "pregunta_respuesta"
 #
 
-INSERT INTO `pregunta_respuesta` VALUES (2,'¿Como puedo ver las fechas de los grados?','Ingresando a www.poligran.edu.co opcion grados','2016-11-04','2016-11-30',1,NULL,2,'2016-12-31'),(3,'Cual es el proceso de admisiones','Debe inscribirse a través de la pagina www.poligran.edu.co/admisiones','2016-11-04','2016-11-30',2,NULL,2,'2016-12-31'),(4,'pregunta n','respuesta n','2016-11-04','2016-11-03',1,NULL,1,'2016-11-30'),(5,'pregunta 001','respuesta 001','2016-11-04','2016-11-11',1,NULL,1,'2016-11-25'),(6,'¿Como puedo ver mis notas?','entrando en www.poligran.edu.co/estudiantes con el usuario asignado en la opción calificaciones','2016-11-04','2016-11-03',2,NULL,2,'2016-11-30'),(7,'como puedo cambiar mi contraseña','En la opcion de gestion de cuenta','2016-11-10','2016-11-04',1,NULL,2,'2016-11-30'),(8,'otra pregunta','otra respuesta','2016-11-10','2016-11-09',2,NULL,3,'2016-11-30'),(11,'¿Como aplico a una beca?','Entrando en www.poligran.edu.co/becas y diligenciando el formulario','2016-11-16','2016-11-02',3,NULL,1,'2016-11-30');
+INSERT INTO `pregunta_respuesta` VALUES (2,'¿Como puedo ver las fechas de los grados?','Ingresando a www.poligran.edu.co opcion grados','2016-11-04','2016-11-30',1,NULL,2,'2016-12-31'),(3,'Cual es el proceso de admisiones','Debe inscribirse a través de la pagina www.poligran.edu.co/admisiones','2016-11-04','2016-11-30',2,NULL,2,'2016-12-31'),(4,'pregunta n','respuesta n','2016-11-04','2016-11-03',1,NULL,1,'2016-11-30'),(5,'pregunta 001','respuesta 001','2016-11-04','2016-11-11',1,NULL,1,'2016-11-25'),(6,'¿Como puedo ver mis notas?','entrando en www.poligran.edu.co/estudiantes con el usuario asignado en la opción calificaciones','2016-11-04','2016-11-03',2,NULL,2,'2016-11-30'),(7,'como puedo cambiar mi contraseña','En la opcion de gestion de cuenta','2016-11-10','2016-11-04',1,NULL,2,'2016-11-30'),(8,'otra pregunta','otra respuesta','2016-11-10','2016-11-09',2,NULL,3,'2016-11-30'),(11,'¿Como aplico a una beca?','Entrando en www.poligran.edu.co/becas y diligenciando el formulario','2016-11-16','2016-11-02',3,NULL,1,'2016-11-30'),(12,'pregunta001','respuesta001','2016-11-17','2016-11-02',2,NULL,1,'2016-11-05'),(13,'pregunta pendiente','respuesta pendiente','2016-11-17','2016-11-02',3,NULL,1,'2016-11-30');
 
 #
 # Structure for table "comentario"

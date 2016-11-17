@@ -13,6 +13,7 @@
 <jsp:include page="_header.jsp" />
 <link rel="stylesheet" type="text/css" href="css/acordion.css">
 <link rel="stylesheet" type="text/css" href="css/comentarios.css">
+<script src="js/consulta.js"></script>
 <script>
     $(document).ready(function () {
         $("#mensaje").fadeOut(7000);
@@ -25,11 +26,14 @@
     <% }%>
     <h2>Preguntas Frecuentes</h2>
     <br>
+    <div align="right">
+        <input id="filtro" type="text" size="40" placeholder="Búsqueda Rápida">
+    </div>
     <%if (request.getAttribute("listPreguntas") != null) {
             List<PreguntaRespuestaDTO> lista = (ArrayList) request.getAttribute("listPreguntas");
             for (PreguntaRespuestaDTO pdto : lista) {
     %>
-    <button class="accordion"><%=pdto.getPregunta()%><i class="fa fa-plus pull-right"></i></button>
+   <button class="accordion"><%=pdto.getPregunta()%><i class="fa fa-plus pull-right"></i></button>
     <div class="panel">
         <br/>
         <p><%=pdto.getRespuesta()%></p>

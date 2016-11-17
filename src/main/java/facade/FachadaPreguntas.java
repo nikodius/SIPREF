@@ -9,9 +9,11 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.ComentarioDTO;
+import modelo.HistorialDTO;
 import modelo.PreguntaRespuestaDTO;
 import modelo.UsuarioDTO;
 import persistencia.ComentariosDAO;
+import persistencia.HistorialDAO;
 import persistencia.PreguntaRespuestaDAO;
 import persistencia.UsuarioDAO;
 import utilidades.Conexion;
@@ -26,12 +28,14 @@ public class FachadaPreguntas {
     PreguntaRespuestaDAO prdao;
     ComentariosDAO cdao;
     UsuarioDAO udao;
+    HistorialDAO hdao;
     Connection conexion;
         
     public FachadaPreguntas() throws MiExcepcion {
         prdao = new PreguntaRespuestaDAO();
         cdao = new ComentariosDAO();
         udao = new UsuarioDAO();
+        hdao = new HistorialDAO();
         conexion = Conexion.getInstance();
     }
     
@@ -75,5 +79,14 @@ public class FachadaPreguntas {
     
     public String cambiarEstadoComentario(String id, int estado) throws MiExcepcion{
         return cdao.cambiarEstadoComentario(id, conexion, estado);
+    }
+    
+    public String insertarHistorial(HistorialDTO hdto) throws MiExcepcion{
+        return hdao.crearRegistro(hdto, conexion);
+    }
+    
+    public List<HistorialDTO> listarHistorial() throws MiExcepcion{
+        ArrayList<HistorialDTO> historial = hdao.listarHistorial(conexion);
+        return historial;
     }
 }

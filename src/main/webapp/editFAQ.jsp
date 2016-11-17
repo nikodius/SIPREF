@@ -29,6 +29,7 @@
     <div align="left"><a href="PreguntasRespuestas"><img src="images/back.png" alt="back"/></a></div>
     <form  method="post" action="PreguntasRespuestas?edit">
         <input type="hidden" name="idPr" id="idPr" value="<%=pr.getId()%>">
+        <input type="hidden" id="user" name="user" value="<%=usuario.getUser()%>">
         <div class="form-group">
             <label for="inputQuestion">Pregunta</label>
             <input type="text" class="form-control" id="inputQuestion" name="inputQuestion" value="<%=pr.getPregunta()%>" required>

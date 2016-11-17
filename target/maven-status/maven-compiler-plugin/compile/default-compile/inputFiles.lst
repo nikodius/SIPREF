@@ -3,6 +3,7 @@ C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\facade\FachadaPr
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\modelo\PreguntaRespuestaDTO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\ComentariosDAO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\PreguntasRespuestas.java
+C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\modelo\HistorialDTO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\PreguntaRespuestaDAO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\modelo\LoginDTO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\utilidades\Utilities.java
@@ -13,8 +14,10 @@ C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\modelo\UsuarioDT
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\GestionLogin.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\UsuarioDAO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\utilidades\MiExcepcion.java
+C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\HistorialDAO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\Consultar.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\LoginDAO.java
+C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\Historial.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\Factory\DTOFactory.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\Autores.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\utilidades\Conexion.java

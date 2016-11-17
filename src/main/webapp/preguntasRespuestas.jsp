@@ -44,7 +44,7 @@
             <li><a class="active" href="PreguntasRespuestas">Preguntas Respuestas</a></li>
             <li><a href="Autores">Permiso Aprobación</a></li>
             <li><a href="#">Usuarios</a></li>
-            <li><a href="#">Historial Modificaciones</a></li>
+            <li><a href="Historial">Historial Modificaciones</a></li>
         </ul>
     </nav>
     <br>
@@ -94,9 +94,9 @@
 
                 <% if (usuario.isAprobarPregunta()) {
                         if (pdto.getCodigoEstado() == 1) {%>
-                <td><a href="PreguntasRespuestas?approve=<% out.print(pdto.getId());%>"><img src="images/approve.png" alt="approve"/></a></td>
+                <td><a href="PreguntasRespuestas?approve=<% out.print(pdto.getId());%>&pregunta=<% out.print(pdto.getPregunta());%>&user=<% out.print(usuario.getUser());%>"><img src="images/approve.png" alt="approve"/></a></td>
                         <%} else if (pdto.getCodigoEstado() == 2) {%>
-                <td><a href="PreguntasRespuestas?disapprove=<% out.print(pdto.getId());%>"><img src="images/disapprove.png" alt="disapprove"/></a></td>
+                <td><a href="PreguntasRespuestas?disapprove=<% out.print(pdto.getId());%>&pregunta=<% out.print(pdto.getPregunta());%>&user=<% out.print(usuario.getUser());%>"><img src="images/disapprove.png" alt="disapprove"/></a></td>
                         <%} else { %>
                 <td></td>
                 <%}
@@ -104,9 +104,9 @@
 
                 <% if (usuario.getIdRol() == 1) {%>     
                 <% if (pdto.getCodigoEstado() == 3) {%>
-                <td><a href="PreguntasRespuestas?active=<% out.print(pdto.getId());%>"><img src="images/activate.png" alt="activate"/></a></td> 
+                <td><a href="PreguntasRespuestas?active=<% out.print(pdto.getId());%>&pregunta=<% out.print(pdto.getPregunta());%>&user=<% out.print(usuario.getUser());%>"><img src="images/activate.png" alt="activate"/></a></td> 
                         <%} else {%>
-                <td><a href="PreguntasRespuestas?deactivate=<% out.print(pdto.getId());%>"><img src="images/disactivate.png" alt="disactivate"/></a></td>
+                <td><a href="PreguntasRespuestas?deactivate=<% out.print(pdto.getId());%>&pregunta=<% out.print(pdto.getPregunta());%>&user=<% out.print(usuario.getUser());%>"><img src="images/disactivate.png" alt="disactivate"/></a></td>
                         <%}%>
                         <%}%>
             </tr>
