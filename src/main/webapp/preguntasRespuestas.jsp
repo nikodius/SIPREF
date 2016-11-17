@@ -89,7 +89,7 @@
                     <a href="PreguntasRespuestas?editId=<% out.print(pdto.getId());%>"><img src="images/edit.png" id="imgEX" alt="Modificar Registro"/></a>
                 </td>
                 <td>
-                    <a href="PreguntasRespuestas?commentsId=<% out.print(pdto.getId());%>"><img src="images/comment.png" id="imgEX" alt="Modificar Registro"/></a>
+                    <a href="PreguntasRespuestas?commentsId=<% out.print(pdto.getId());%>"><img src="images/comment.png" id="imgEX" alt="Modificar Registro"/> <% out.print(pdto.getComentarios().size());%></a>
                 </td>
 
                 <% if (usuario.isAprobarPregunta()) {

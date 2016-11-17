@@ -44,7 +44,12 @@ public class FachadaPreguntas {
     }
     
     public List<PreguntaRespuestaDTO> listarPreguntas() throws MiExcepcion{
-        return prdao.listarTodo(conexion);
+        List<PreguntaRespuestaDTO> preguntas = prdao.listarTodo(conexion);
+        for(PreguntaRespuestaDTO pr : preguntas){
+            ArrayList<ComentarioDTO> comentarios = cdao.listarComentarios(conexion, pr.getId());
+            pr.setComentarios(comentarios);
+        }
+        return preguntas;
     }
     
     public List<PreguntaRespuestaDTO> listarPreguntasConsultas() throws MiExcepcion{
