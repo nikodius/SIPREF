@@ -33,7 +33,4 @@ public class FactoryDTO implements Factory {
     public UsuarioDTO crearUsuario() {
         return new UsuarioDTO();
     }
-
-   
-
 }

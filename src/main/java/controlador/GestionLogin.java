@@ -73,18 +73,14 @@ public class GestionLogin extends HttpServlet {
             objLoginDTO.setContraseniaUsuario(contrasenia);
             objLoginDTO = objLoginDAO.Login(objLoginDTO, conexion);
             if (objLoginDTO.isValido()) {
-                UsuarioDTO user = facadeUser.detallesUsuario(objLoginDTO.getNombreUsuario());
+                UsuarioDTO user = facadeUser.detallesUsuarioLogin(objLoginDTO.getNombreUsuario());
                 //valida usuario activo
                 if (user.getIdEstado() == 1) {
                     HttpSession sesion = request.getSession(true);
                     sesion.setAttribute("user", user);
-                    //Autor
-//                    if (user.getIdRol() == 2) {
-//                        response.sendRedirect("PreguntasRespuestas");
-//                    }
                     response.sendRedirect("PreguntasRespuestas");
                 } else{
-                    respuesta = "No se encontro el ususario en la aplicacion";
+                    respuesta = "Usuario invalido o inactivo";
                     response.sendRedirect("GestionLogin?msg=" + respuesta);
                 }
             } else {

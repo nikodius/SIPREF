@@ -6,6 +6,7 @@
 package controlador;
 
 import Factory.FactoryDTO;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import facade.FachadaPreguntas;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,6 +51,7 @@ public class PreguntasRespuestas extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             request.setCharacterEncoding("UTF-8");
             facadePR = new FachadaPreguntas();
+            dtoFactory = new FactoryDTO();
             ListarPreguntas(request, response);
         } catch (MiExcepcion | UnsupportedEncodingException | ServletException ex) {
             response.sendRedirect("PreguntasRespuestas?msg=" + ex.getMessage());

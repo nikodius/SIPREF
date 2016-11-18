@@ -20,6 +20,10 @@
         <servlet-name>Historial</servlet-name>
         <servlet-class>controlador.Historial</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GestionUsuarios</servlet-name>
+        <servlet-class>controlador.GestionUsuarios</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PreguntasRespuestas</servlet-name>
         <url-pattern>/PreguntasRespuestas</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>Historial</servlet-name>
         <url-pattern>/Historial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GestionUsuarios</servlet-name>
+        <url-pattern>/GestionUsuarios</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

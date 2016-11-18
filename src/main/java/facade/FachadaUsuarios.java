@@ -34,7 +34,27 @@ public class FachadaUsuarios {
         return udao.cambiarEstadoAprobacion(id, conexion, estado);
     }
     
-    public UsuarioDTO detallesUsuario(String user) throws MiExcepcion{
-        return udao.detallesUsuario(conexion, user);
+    public UsuarioDTO detallesUsuarioLogin(String user) throws MiExcepcion{
+        return udao.detallesUsuarioLogin(conexion, user);
+    }
+    
+    public List<UsuarioDTO> listarUsuarios() throws MiExcepcion{
+        return udao.listarUsuarios(conexion);
+    }
+    
+    public String insertarUsuario(UsuarioDTO urdto) throws MiExcepcion{
+        return udao.IngresarUsuario(urdto, conexion);
+    }
+    
+    public String cambiarEstadoUsuario(String id, int estado) throws MiExcepcion{
+        return udao.cambiarEstadoUsuario(id, conexion, estado);
+    }
+    
+    public UsuarioDTO detallesUsuarioModificar(int id) throws MiExcepcion{
+        return udao.detallesUsuarioModificar(conexion, id);
+    }
+    
+    public String editarUsuario(UsuarioDTO pr, int id) throws MiExcepcion{
+        return udao.editarUsuario(conexion, pr, id);
     }
 }

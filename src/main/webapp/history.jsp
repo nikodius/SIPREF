@@ -41,7 +41,7 @@
         <ul>
             <li><a href="PreguntasRespuestas">Preguntas Respuestas</a></li>
             <li><a href="Autores">Permiso Aprobación</a></li>
-            <li><a href="#">Usuarios</a></li>
+            <li><a href="GestionUsuarios">Usuarios</a></li>
             <li><a class="active" href="Historial">Historial Modificaciones</a></li>
         </ul>
     </nav>

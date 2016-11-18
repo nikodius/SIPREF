@@ -1,5 +1,6 @@
 persistencia\LoginDAO.class
 persistencia\ComentariosDAO.class
+controlador\GestionUsuarios.class
 controlador\Autores.class
 controlador\Historial.class
 facade\FachadaUsuarios.class
@@ -14,9 +15,9 @@ Factory\Factory.class
 modelo\PreguntaRespuestaDTO.class
 modelo\UsuarioDTO.class
 controlador\GestionLogin.class
+Factory\FactoryDTO.class
 persistencia\PreguntaRespuestaDAO.class
 utilidades\Utilities.class
-Factory\DTOFactory.class
 persistencia\UsuarioDAO.class
 modelo\LoginDTO.class
 persistencia\HistorialDAO.class

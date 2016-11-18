@@ -12,12 +12,13 @@ C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\Come
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\Factory\Factory.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\modelo\UsuarioDTO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\GestionLogin.java
+C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\GestionUsuarios.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\UsuarioDAO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\utilidades\MiExcepcion.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\HistorialDAO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\Consultar.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\persistencia\LoginDAO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\Historial.java
-C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\Factory\DTOFactory.java
+C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\Factory\FactoryDTO.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\controlador\Autores.java
 C:\Users\UserQV\Documents\NetBeansProjects\SIPREF\src\main\java\utilidades\Conexion.java

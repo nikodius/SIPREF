@@ -27,7 +27,7 @@ public class HistorialDAO {
         ArrayList<HistorialDTO> listaHIstorial = new ArrayList();
         try {
             String query = "SELECT  Usuario, accion, fecha "
-                    + "FROM historial;";
+                    + "FROM historial ORDER BY Id DESC;";
             statement = conexion.prepareStatement(query);
             rs = statement.executeQuery();
             while (rs.next()) {

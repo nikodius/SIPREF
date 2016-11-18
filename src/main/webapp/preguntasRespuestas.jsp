@@ -43,11 +43,11 @@
         <ul>
             <li><a class="active" href="PreguntasRespuestas">Preguntas Respuestas</a></li>
             <li><a href="Autores">Permiso Aprobación</a></li>
-            <li><a href="#">Usuarios</a></li>
+            <li><a href="GestionUsuarios">Usuarios</a></li>
             <li><a href="Historial">Historial Modificaciones</a></li>
         </ul>
     </nav>
-    <br>
+    <br/>
     <% } %>
 
     <%if (request.getAttribute("listPreguntas") != null) {

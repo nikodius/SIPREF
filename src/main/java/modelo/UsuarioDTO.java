@@ -23,6 +23,19 @@ public class UsuarioDTO {
     private boolean aprobarPregunta;
     private String user;
 
+    public UsuarioDTO() {
+    }
+
+    public UsuarioDTO(String nombre, String apellido, String telefono, String email, int idEstado, int idRol, String user) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.email = email;
+        this.idEstado = idEstado;
+        this.idRol = idRol;
+        this.user = user;
+    }
+
     public int getId() {
         return id;
     }

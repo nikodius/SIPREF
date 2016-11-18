@@ -40,7 +40,7 @@
         <ul>
             <li><a href="PreguntasRespuestas">Preguntas Respuestas</a></li>
             <li><a class="active" href="Autores">Permiso Aprobación</a></li>
-            <li><a href="#">Usuarios</a></li>
+            <li><a href="GestionUsuarios">Usuarios</a></li>
             <li><a href="Historial">Historial Modificaciones</a></li>
         </ul>
     </nav>
@@ -56,8 +56,8 @@
         <thead>
             <tr>
                 <th>Usuario</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
                 <th>Telefono</th>
                 <th>Email</th>
                 <th>Permiso Aprobacion</th>

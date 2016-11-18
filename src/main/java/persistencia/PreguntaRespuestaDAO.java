@@ -50,7 +50,6 @@ public class PreguntaRespuestaDAO {
         }
         //devolvemos el arreglo
         return pr;
-
     }
 
     public ArrayList<PreguntaRespuestaDTO> listarTodo(Connection conexion) throws MiExcepcion {
@@ -89,7 +88,7 @@ public class PreguntaRespuestaDAO {
             String query = "SELECT Id_pregunta_respuesta, Contenido_pregunta, Contenido_respuesta "
                     + "FROM pregunta_respuesta "
                     + "INNER JOIN estado_pregunta_respuesta ON(pregunta_respuesta.Id_estado_pregunta=estado_pregunta_respuesta.Id_estado_pregunta_respuesta) "
-                    + "WHERE Id_estado_pregunta <> 1 AND CURDATE() between inicio_vigencia and fin_vigencia "
+                    + "WHERE Id_estado_pregunta = 2 AND CURDATE() between inicio_vigencia and fin_vigencia "
                     + "ORDER BY Id_pregunta_respuesta DESC;";
             statement = conexion.prepareStatement(query);
             rs = statement.executeQuery();
@@ -180,10 +179,10 @@ public class PreguntaRespuestaDAO {
 
             //comprobar si se ejecuto la instruccion en sql
             if (resultado != 0) {
-                respuesta = "cambiada correctamente";
+                respuesta = "Modificada Correctamente";
 
             } else {
-                respuesta = "se ha cambiado";
+                respuesta = "NO se ha modificado";
             }
 
         } catch (SQLException ex) {
