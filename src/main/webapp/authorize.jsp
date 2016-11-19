@@ -76,9 +76,9 @@
                 <td><%=pdto.getEmail()%></td>
                 <td><%=pdto.isAprobarPregunta() ? "Puede aprobar" : "NO puede aprobar"%></td>
                 <% if (pdto.isAprobarPregunta()) {%>
-                <td><a href="Autores?disapprove=<% out.print(pdto.getId());%>"><img src="images/disapprove.png" alt="disapprove"/></a></td>
+                <td><a href="Autores?disapprove=<% out.print(pdto.getId());%>&autor=<% out.print(pdto.getUser());%>&user=<% out.print(usuario.getUser());%>"><img src="images/disapprove.png" alt="disapprove"/></a></td>
                         <%} else {%>
-                <td><a href="Autores?approve=<% out.print(pdto.getId());%>"><img src="images/approve.png" alt="approve"/></a></td>
+                <td><a href="Autores?approve=<% out.print(pdto.getId());%>&autor=<% out.print(pdto.getUser());%>&user=<% out.print(usuario.getUser());%>"><img src="images/approve.png" alt="approve"/></a></td>
                         <%}%>
             </tr>
             <%}%>

@@ -16,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.HistorialDTO;
 import modelo.UsuarioDTO;
 import utilidades.MiExcepcion;
 
@@ -73,31 +72,20 @@ public class GestionUsuarios extends HttpServlet {
 
     public void nuevoUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("new") != null) {
-            UsuarioDTO objUsuarioDTO = dtoFactory.crearUsuario();
-            objUsuarioDTO.setNombre(request.getParameter("nombresUsuario"));
-            objUsuarioDTO.setApellido(request.getParameter("apellidosUsuario"));
-            objUsuarioDTO.setTelefono(request.getParameter("telefonoUsuario"));
-            objUsuarioDTO.setEmail(request.getParameter("correoUsuario"));
-            objUsuarioDTO.setIdEstado(Integer.parseInt(request.getParameter("estadoUsuario")));
-            objUsuarioDTO.setIdRol(Integer.parseInt(request.getParameter("rolUsuario")));
-            objUsuarioDTO.setUser(request.getParameter("usuarioLogin"));
-            String respuesta = facadeUser.insertarUsuario(objUsuarioDTO);
-            //historial
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "creo nuevo Usuario: " + request.getParameter("usuarioLogin"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
+            String respuesta = facadeUser.insertarUsuario(dtoFactory.crearUsuario(request.getParameter("nombresUsuario"), request.getParameter("apellidosUsuario"), request.getParameter("telefonoUsuario"), request.getParameter("correoUsuario"), Integer.parseInt(request.getParameter("estadoUsuario")), Integer.parseInt(request.getParameter("rolUsuario")), request.getParameter("usuarioLogin")));
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "creo nuevo Usuario: " + request.getParameter("usuarioLogin"), String.valueOf(new Date())));
             response.sendRedirect("GestionUsuarios?msg=" + respuesta);
         } else {
             desactivarUsuario(request, response);
         }
     }
-    
+
     public void desactivarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("desactivate") != null) {
             String id = request.getParameter("desactivate");
             facadeUser.cambiarEstadoUsuario(id, 2);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "inactivó al usuario: " + request.getParameter("nameUser"), String.valueOf(new Date())));
             response.sendRedirect("GestionUsuarios");
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "inactivó al usuario: " + request.getParameter("nameUser"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             activarUsuario(request, response);
         }
@@ -107,14 +95,13 @@ public class GestionUsuarios extends HttpServlet {
         if (request.getParameter("active") != null) {
             String id = request.getParameter("active");
             facadeUser.cambiarEstadoUsuario(id, 1);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "activo al usuario: " + request.getParameter("nameUser"), String.valueOf(new Date())));
             response.sendRedirect("GestionUsuarios");
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "activo al usuario: " + request.getParameter("nameUser"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             redirectEditarUsuario(request, response);
         }
     }
-    
+
     public void redirectEditarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("editId") != null) {
             int id = Integer.parseInt(request.getParameter("editId"));
@@ -125,22 +112,13 @@ public class GestionUsuarios extends HttpServlet {
             actualizarUsuario(request, response);
         }
     }
-    
+
     public void actualizarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion {
         String respuesta = "";
         if (request.getParameter("edit") != null) {
-            UsuarioDTO objUsuarioDTO = dtoFactory.crearUsuario();
-            objUsuarioDTO.setNombre(request.getParameter("nombresUsuario"));
-            objUsuarioDTO.setApellido(request.getParameter("apellidosUsuario"));
-            objUsuarioDTO.setTelefono(request.getParameter("telefonoUsuario"));
-            objUsuarioDTO.setEmail(request.getParameter("correoUsuario"));
-            objUsuarioDTO.setIdEstado(Integer.parseInt(request.getParameter("estadoUsuario")));
-            objUsuarioDTO.setIdRol(Integer.parseInt(request.getParameter("rolUsuario")));
-            objUsuarioDTO.setUser(request.getParameter("usuarioLogin"));
-            respuesta = facadeUser.editarUsuario(objUsuarioDTO, Integer.parseInt(request.getParameter("id")));
+            respuesta = facadeUser.editarUsuario(dtoFactory.crearUsuario(request.getParameter("nombresUsuario"), request.getParameter("apellidosUsuario"), request.getParameter("telefonoUsuario"), request.getParameter("correoUsuario"), Integer.parseInt(request.getParameter("estadoUsuario")), Integer.parseInt(request.getParameter("rolUsuario")), request.getParameter("usuarioLogin")), Integer.parseInt(request.getParameter("id")));
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "edito al usuario: " + request.getParameter("usuarioLogin"), String.valueOf(new Date())));
             response.sendRedirect("GestionUsuarios?&msg=" + respuesta);
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "edito al usuario: " + request.getParameter("usuarioLogin"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             response.sendRedirect("GestionUsuarios");
         }

@@ -25,13 +25,11 @@ public class ComentarioDTO {
     public ComentarioDTO() {
     }
 
-    public ComentarioDTO(int idComentario, String contenido, String fechaComentario, String nombreComentarista, String emailComentarista, int idPadre, int idPreguntaRespuesta) {
-        this.idComentario = idComentario;
+    public ComentarioDTO(String contenido, String fechaComentario, String nombreComentarista, String emailComentarista, int idPreguntaRespuesta) {
         this.contenido = contenido;
         this.fechaComentario = fechaComentario;
         this.nombreComentarista = nombreComentarista;
         this.emailComentarista = emailComentarista;
-        this.idPadre = idPadre;
         this.idPreguntaRespuesta = idPreguntaRespuesta;
     }
 

@@ -8,17 +8,12 @@ package controlador;
 import Factory.FactoryDTO;
 import facade.FachadaPreguntas;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.ComentarioDTO;
-import modelo.HistorialDTO;
 import utilidades.MiExcepcion;
 import utilidades.Utilities;
 
@@ -31,7 +26,7 @@ public class Comentarios extends HttpServlet {
 
     FachadaPreguntas facadePR;
     FactoryDTO dtoFactory;
-    public static int idComment; 
+    public static int idComment;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,6 +43,7 @@ public class Comentarios extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try {
             facadePR = new FachadaPreguntas();
+            dtoFactory = new FactoryDTO();
             nuevoComentario(request, response);
         } catch (MiExcepcion ex) {
             response.sendRedirect("Consultar?msg=" + ex.getMessage());
@@ -56,27 +52,19 @@ public class Comentarios extends HttpServlet {
 
     public void nuevoComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("sendComent") != null) {
-            String respuesta = "";
-            ComentarioDTO dto = new ComentarioDTO();
-            dto.setContenido(request.getParameter("coment"));
-            dto.setNombreComentarista(request.getParameter("name"));
-            dto.setEmailComentarista(request.getParameter("mail"));
-            dto.setIdPreguntaRespuesta(Integer.parseInt(request.getParameter("idPR")));
-            dto.setFechaComentario(String.valueOf(Utilities.getFechaActual()));
-            respuesta = facadePR.insertarComentario(dto);
+            String respuesta = facadePR.insertarComentario(dtoFactory.crearComentario(request.getParameter("coment"), request.getParameter("name"), request.getParameter("mail"), Integer.parseInt(request.getParameter("idPR")), String.valueOf(Utilities.getFechaActual())));
             response.sendRedirect("Consultar?msg=" + respuesta);
         } else {
-           aprobarComentario(request, response);
+            aprobarComentario(request, response);
         }
     }
-    
+
     public void aprobarComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("approve") != null) {
             String id = request.getParameter("approve");
             facadePR.cambiarEstadoComentario(id, 1);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "aprobó el comentario: " + request.getParameter("comentario"), String.valueOf(new Date())));
             response.sendRedirect("PreguntasRespuestas?commentsId=" + idComment);
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "aprobó el comentario: " + request.getParameter("comentario"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             desaprobarComentario(request, response);
         }
@@ -86,9 +74,8 @@ public class Comentarios extends HttpServlet {
         if (request.getParameter("disapprove") != null) {
             String id = request.getParameter("disapprove");
             facadePR.cambiarEstadoComentario(id, 0);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "desaprobó el comentario: " + request.getParameter("comentario"), String.valueOf(new Date())));
             response.sendRedirect("PreguntasRespuestas?commentsId=" + idComment);
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "desaprobó el comentario: " + request.getParameter("comentario"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             response.sendRedirect("Consultar");
         }

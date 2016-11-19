@@ -5,13 +5,12 @@
  */
 package controlador;
 
+import Factory.FactoryDTO;
 import facade.FachadaUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.LoginDTO;
 import modelo.UsuarioDTO;
-import persistencia.LoginDAO;
 import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
@@ -31,6 +29,7 @@ public class GestionLogin extends HttpServlet {
 
     Connection conexion;
     FachadaUsuarios facadeUser;
+    FactoryDTO dtoFactory;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,6 +47,7 @@ public class GestionLogin extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             conexion = Conexion.getInstance();
             facadeUser = new FachadaUsuarios();
+            dtoFactory = new FactoryDTO();
             redireccionLogin(request, response);
         } catch (MiExcepcion | SQLException ex) {
             response.sendRedirect("GestionLogin?msg=" + ex.getMessage());
@@ -64,22 +64,16 @@ public class GestionLogin extends HttpServlet {
 
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion, SQLException {
         if (request.getParameter("enviar") != null) {
-            LoginDTO objLoginDTO = new LoginDTO();
-            LoginDAO objLoginDAO = new LoginDAO();
-            String respuesta = "";
-            String usuario = request.getParameter("nombreUsuario");
-            String contrasenia = request.getParameter("contraseniaUsuario");
-            objLoginDTO.setNombreUsuario(usuario);
-            objLoginDTO.setContraseniaUsuario(contrasenia);
-            objLoginDTO = objLoginDAO.Login(objLoginDTO, conexion);
-            if (objLoginDTO.isValido()) {
-                UsuarioDTO user = facadeUser.detallesUsuarioLogin(objLoginDTO.getNombreUsuario());
+            String respuesta;
+            LoginDTO ldto = facadeUser.login(dtoFactory.crearLogin(request.getParameter("nombreUsuario"), request.getParameter("contraseniaUsuario")));
+            if (ldto.isValido()) {
+                UsuarioDTO user = facadeUser.detallesUsuarioLogin(ldto.getNombreUsuario());
                 //valida usuario activo
                 if (user.getIdEstado() == 1) {
                     HttpSession sesion = request.getSession(true);
                     sesion.setAttribute("user", user);
                     response.sendRedirect("PreguntasRespuestas");
-                } else{
+                } else {
                     respuesta = "Usuario invalido o inactivo";
                     response.sendRedirect("GestionLogin?msg=" + respuesta);
                 }

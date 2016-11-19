@@ -9,8 +9,8 @@ import Factory.FactoryDTO;
 import facade.FachadaPreguntas;
 import facade.FachadaUsuarios;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +25,7 @@ import utilidades.MiExcepcion;
 public class Autores extends HttpServlet {
 
     FachadaUsuarios facadeU;
+    FachadaPreguntas facadePR;
     FactoryDTO dtoFactory;
 
     /**
@@ -42,6 +43,8 @@ public class Autores extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try {
             facadeU = new FachadaUsuarios();
+            facadePR = new FachadaPreguntas();
+            dtoFactory = new FactoryDTO();
             listarAutores(request, response);
         } catch (MiExcepcion ex) {
             response.sendRedirect("Autor?msg=" + ex.getMessage());
@@ -62,6 +65,7 @@ public class Autores extends HttpServlet {
         if (request.getParameter("approve") != null) {
             String id = request.getParameter("approve");
             facadeU.cambiarEstadoAprobarPregunta(id, 1);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "concedio permiso de aprobar preguntas al autor: " + request.getParameter("autor"), String.valueOf(new Date())));
             response.sendRedirect("Autores");
         } else {
             desaprobarPregunta(request, response);
@@ -72,6 +76,7 @@ public class Autores extends HttpServlet {
         if (request.getParameter("disapprove") != null) {
             String id = request.getParameter("disapprove");
             facadeU.cambiarEstadoAprobarPregunta(id, 0);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "denego permiso de aprobar preguntas al autor: " + request.getParameter("autor"), String.valueOf(new Date())));
             response.sendRedirect("Autores");
         } else {
             response.sendRedirect("Autores");

@@ -6,8 +6,11 @@
 package facade;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import modelo.LoginDTO;
 import modelo.UsuarioDTO;
+import persistencia.LoginDAO;
 import persistencia.UsuarioDAO;
 import utilidades.Conexion;
 import utilidades.MiExcepcion;
@@ -18,14 +21,22 @@ import utilidades.MiExcepcion;
  */
 public class FachadaUsuarios {
     
+    LoginDAO ldao;
     UsuarioDAO udao;
     Connection conexion;
-        
+       
+    
+    
     public FachadaUsuarios() throws MiExcepcion {
+        ldao = new LoginDAO();
         udao = new UsuarioDAO();
         conexion = Conexion.getInstance();
     }
 
+    public LoginDTO login(LoginDTO ldto) throws SQLException{
+        return ldao.Login(ldto, conexion);
+    }
+    
     public List<UsuarioDTO> listarAutores() throws MiExcepcion{
         return udao.listarAutores(conexion);
     }

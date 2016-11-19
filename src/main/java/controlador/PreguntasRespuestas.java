@@ -6,25 +6,18 @@
 package controlador;
 
 import Factory.FactoryDTO;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import facade.FachadaPreguntas;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.ComentarioDTO;
-import modelo.HistorialDTO;
 import modelo.PreguntaRespuestaDTO;
-import persistencia.HistorialDAO;
 import utilidades.MiExcepcion;
 import utilidades.Utilities;
 
@@ -78,17 +71,8 @@ public class PreguntasRespuestas extends HttpServlet {
 
     public void nuevaPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("new") != null) {
-            PreguntaRespuestaDTO dto = dtoFactory.crearPreguntaRespuesta();
-            dto.setPregunta(request.getParameter("inputQuestion"));
-            dto.setRespuesta(request.getParameter("inputAnswer"));
-            dto.setInicioVigencia(request.getParameter("inputInicio"));
-            dto.setFinVigencia(request.getParameter("inputFin"));
-            dto.setFecha(String.valueOf(Utilities.getFechaActual()));
-            dto.setIdUsuario(Integer.parseInt(request.getParameter("idUser")));
-            String respuesta = facadePR.insertarRespuesta(dto);
-            //historial
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "creo nueva pregunta: " + dto.getPregunta(), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
+            String respuesta = facadePR.insertarRespuesta(dtoFactory.crearPreguntaRespuesta(request.getParameter("inputQuestion"), request.getParameter("inputAnswer"), request.getParameter("inputInicio"), request.getParameter("inputFin"), String.valueOf(Utilities.getFechaActual()), Integer.parseInt(request.getParameter("idUser"))));
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "creo nueva pregunta: " + request.getParameter("inputQuestion"), String.valueOf(new Date())));
             response.sendRedirect("PreguntasRespuestas?msg=" + respuesta);
         } else {
             desactivarPregunta(request, response);
@@ -99,9 +83,8 @@ public class PreguntasRespuestas extends HttpServlet {
         if (request.getParameter("deactivate") != null) {
             String id = request.getParameter("deactivate");
             facadePR.cambiarEstadoPreguntaRespuesta(id, 3);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "inactivó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date())));
             response.sendRedirect("PreguntasRespuestas");
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "inactivó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             activarPregunta(request, response);
         }
@@ -111,9 +94,8 @@ public class PreguntasRespuestas extends HttpServlet {
         if (request.getParameter("active") != null) {
             String id = request.getParameter("active");
             facadePR.cambiarEstadoPreguntaRespuesta(id, 1);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "publicó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date())));
             response.sendRedirect("PreguntasRespuestas");
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "publicó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             aprobarPregunta(request, response);
         }
@@ -123,9 +105,8 @@ public class PreguntasRespuestas extends HttpServlet {
         if (request.getParameter("approve") != null) {
             String id = request.getParameter("approve");
             facadePR.cambiarEstadoPreguntaRespuesta(id, 2);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "aprobó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date())));
             response.sendRedirect("PreguntasRespuestas");
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "aprobó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             desaprobarPregunta(request, response);
         }
@@ -135,9 +116,8 @@ public class PreguntasRespuestas extends HttpServlet {
         if (request.getParameter("disapprove") != null) {
             String id = request.getParameter("disapprove");
             facadePR.cambiarEstadoPreguntaRespuesta(id, 1);
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "desaprobó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date())));
             response.sendRedirect("PreguntasRespuestas");
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "desaprobó la pregunta: " + request.getParameter("pregunta"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             redirectEditarPregunta(request, response);
         }
@@ -153,7 +133,7 @@ public class PreguntasRespuestas extends HttpServlet {
             redirectComentariosPregunta(request, response);
         }
     }
-    
+
     public void redirectComentariosPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("commentsId") != null) {
             int id = Integer.parseInt(request.getParameter("commentsId"));
@@ -169,11 +149,9 @@ public class PreguntasRespuestas extends HttpServlet {
     public void actualizarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion {
         String respuesta = "";
         if (request.getParameter("edit") != null) {
-            PreguntaRespuestaDTO pr = new PreguntaRespuestaDTO(request.getParameter("inputQuestion"), request.getParameter("inputAnswer"), request.getParameter("inputInicio"), request.getParameter("inputFin"));
-            respuesta = facadePR.editarPreguntaRespuesta(pr, Integer.parseInt(request.getParameter("idPr")));
+            respuesta = facadePR.editarPreguntaRespuesta(dtoFactory.crearPreguntaRespuesta(request.getParameter("inputQuestion"), request.getParameter("inputAnswer"), request.getParameter("inputInicio"), request.getParameter("inputFin")), Integer.parseInt(request.getParameter("idPr")));
+            facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "edito la pregunta: " + request.getParameter("inputQuestion"), String.valueOf(new Date())));
             response.sendRedirect("PreguntasRespuestas?&msg=" + respuesta);
-            HistorialDTO hdto = new HistorialDTO(request.getParameter("user"), "edito la pregunta: " + request.getParameter("inputQuestion"), String.valueOf(new Date()));
-            facadePR.insertarHistorial(hdto);
         } else {
             response.sendRedirect("PreguntasRespuestas");
         }
