@@ -105,7 +105,7 @@ public class GestionUsuarios extends HttpServlet {
     public void redirectEditarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("editId") != null) {
             int id = Integer.parseInt(request.getParameter("editId"));
-            UsuarioDTO us = facadeUser.detallesUsuarioModificar(id);
+            Object us = facadeUser.detallesUsuarioModificar(id);
             request.setAttribute("usuario", us);
             request.getRequestDispatcher("editUser.jsp").forward(request, response);
         } else {

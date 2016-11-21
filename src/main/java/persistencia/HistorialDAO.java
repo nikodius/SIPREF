@@ -17,14 +17,14 @@ import utilidades.MiExcepcion;
  *
  * @author UserQV
  */
-public class HistorialDAO {
+public class HistorialDAO implements ModeloDAO{
     
     PreparedStatement statement;
     ResultSet rs;
-    String mensaje = "";
-    
-    public ArrayList<HistorialDTO> listarHistorial(Connection conexion) throws MiExcepcion {
-        ArrayList<HistorialDTO> listaHIstorial = new ArrayList();
+
+    @Override
+    public ArrayList<Object> listarTodo(Connection conexion) throws MiExcepcion {
+         ArrayList<Object> listaHIstorial = new ArrayList();
         try {
             String query = "SELECT  Usuario, accion, fecha "
                     + "FROM historial ORDER BY Id DESC;";
@@ -44,7 +44,9 @@ public class HistorialDAO {
         return listaHIstorial;
     }
 
-    public String crearRegistro(HistorialDTO historial, Connection conexion) {
+    @Override
+    public String crearRegistro(Object dto, Connection conexion) {
+        HistorialDTO historial = (HistorialDTO)dto;
         int resultado = 0;
         String respuesta = "";
         String sql = "INSERT INTO historial(usuario, accion, fecha) VALUES (?, ?, ?)";
@@ -66,5 +68,25 @@ public class HistorialDAO {
             respuesta = "error al insertar";
         }
         return respuesta;
+    }
+
+    @Override
+    public String editar(Connection conexion, Object dto, int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String cambiarEstado(String id, Connection conexion, int estado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Object> listarTodosFiltro(Connection conexion, int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public Object seleccionarUno(Connection conexion, int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

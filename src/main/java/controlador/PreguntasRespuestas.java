@@ -126,7 +126,7 @@ public class PreguntasRespuestas extends HttpServlet {
     public void redirectEditarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("editId") != null) {
             int id = Integer.parseInt(request.getParameter("editId"));
-            PreguntaRespuestaDTO pr = facadePR.detallesPreguntaRespuesta(id);
+            Object pr = facadePR.detallesPreguntaRespuesta(id);
             request.setAttribute("preguntaRespuesta", pr);
             request.getRequestDispatcher("editFAQ.jsp").forward(request, response);
         } else {
@@ -138,7 +138,7 @@ public class PreguntasRespuestas extends HttpServlet {
         if (request.getParameter("commentsId") != null) {
             int id = Integer.parseInt(request.getParameter("commentsId"));
             Comentarios.idComment = id;
-            List<ComentarioDTO> comentarios = facadePR.listarComentarios(id);
+            List<Object> comentarios = facadePR.listarComentarios(id);
             request.setAttribute("listaComentarios", comentarios);
             request.getRequestDispatcher("comments.jsp").forward(request, response);
         } else {

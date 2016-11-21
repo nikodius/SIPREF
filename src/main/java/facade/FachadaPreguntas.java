@@ -24,13 +24,13 @@ import utilidades.MiExcepcion;
  * @author UserQV
  */
 public class FachadaPreguntas {
-    
+
     PreguntaRespuestaDAO prdao;
     ComentariosDAO cdao;
     UsuarioDAO udao;
     HistorialDAO hdao;
     Connection conexion;
-        
+
     public FachadaPreguntas() throws MiExcepcion {
         prdao = new PreguntaRespuestaDAO();
         cdao = new ComentariosDAO();
@@ -38,60 +38,72 @@ public class FachadaPreguntas {
         hdao = new HistorialDAO();
         conexion = Conexion.getInstance();
     }
-    
-    public synchronized String insertarRespuesta(PreguntaRespuestaDTO prdto) throws MiExcepcion{
+
+    public synchronized String insertarRespuesta(PreguntaRespuestaDTO prdto) throws MiExcepcion {
         return prdao.crearRegistro(prdto, conexion);
     }
-    
-    public List<PreguntaRespuestaDTO> listarPreguntas() throws MiExcepcion{
-        List<PreguntaRespuestaDTO> preguntas = prdao.listarTodo(conexion);
-        for(PreguntaRespuestaDTO pr : preguntas){
-            ArrayList<ComentarioDTO> comentarios = cdao.listarComentarios(conexion, pr.getId());
+
+    public List<PreguntaRespuestaDTO> listarPreguntas() throws MiExcepcion {
+        List<Object> dto = prdao.listarTodo(conexion);
+        List<PreguntaRespuestaDTO> preguntas = new ArrayList();
+        for (Object mDTO : dto) {
+            preguntas.add((PreguntaRespuestaDTO) mDTO);
+        }
+        for (PreguntaRespuestaDTO pr : preguntas) {
+            ArrayList<Object> objects = cdao.listarTodosFiltro(conexion, pr.getId());
+            ArrayList<ComentarioDTO> comentarios = new ArrayList();
+            for (Object object : objects) {
+                comentarios.add((ComentarioDTO) object);
+            }
             pr.setComentarios(comentarios);
         }
         return preguntas;
     }
-    
-    public List<PreguntaRespuestaDTO> listarPreguntasConsultas() throws MiExcepcion{
+
+    public List<PreguntaRespuestaDTO> listarPreguntasConsultas() throws MiExcepcion {
         List<PreguntaRespuestaDTO> preguntas = prdao.listarParaConsultas(conexion);
-        for(PreguntaRespuestaDTO pr : preguntas){
-            ArrayList<ComentarioDTO> comentarios = cdao.listarComentarios(conexion, pr.getId());
+        for (PreguntaRespuestaDTO pr : preguntas) {
+            ArrayList<Object> objects = cdao.listarTodosFiltro(conexion, pr.getId());
+            ArrayList<ComentarioDTO> comentarios = new ArrayList();
+            for (Object object : objects) {
+                comentarios.add((ComentarioDTO) object);
+            }
             pr.setComentarios(comentarios);
         }
         return preguntas;
     }
-    
-    public List<ComentarioDTO> listarComentarios(int id) throws MiExcepcion{
-        ArrayList<ComentarioDTO> comentarios = cdao.listarComentarios(conexion, id);
+
+    public List<Object> listarComentarios(int id) throws MiExcepcion {
+        ArrayList<Object> comentarios = cdao.listarTodosFiltro(conexion, id);
         return comentarios;
     }
-     
-    public String cambiarEstadoPreguntaRespuesta(String id, int estado) throws MiExcepcion{
-        return prdao.cambiarEstadoPregunta(id, conexion, estado);
+
+    public String cambiarEstadoPreguntaRespuesta(String id, int estado) throws MiExcepcion {
+        return prdao.cambiarEstado(id, conexion, estado);
     }
-      
-    public PreguntaRespuestaDTO detallesPreguntaRespuesta(int id) throws MiExcepcion{
-        return prdao.detallesPreguntaRespuesta(conexion, id);
+
+    public Object detallesPreguntaRespuesta(int id) throws MiExcepcion {
+        return prdao.seleccionarUno(conexion, id);
     }
-    
-    public String editarPreguntaRespuesta(PreguntaRespuestaDTO pr, int id) throws MiExcepcion{
-        return prdao.editarPreguntaRespuesta(conexion, pr, id);
+
+    public String editarPreguntaRespuesta(PreguntaRespuestaDTO pr, int id) throws MiExcepcion {
+        return prdao.editar(conexion, pr, id);
     }
-    
-    public String insertarComentario(ComentarioDTO cdto) throws MiExcepcion{
+
+    public String insertarComentario(ComentarioDTO cdto) throws MiExcepcion {
         return cdao.crearRegistro(cdto, conexion);
     }
-    
-    public String cambiarEstadoComentario(String id, int estado) throws MiExcepcion{
-        return cdao.cambiarEstadoComentario(id, conexion, estado);
+
+    public String cambiarEstadoComentario(String id, int estado) throws MiExcepcion {
+        return cdao.cambiarEstado(id, conexion, estado);
     }
-    
-    public String insertarHistorial(HistorialDTO hdto) throws MiExcepcion{
+
+    public String insertarHistorial(HistorialDTO hdto) throws MiExcepcion {
         return hdao.crearRegistro(hdto, conexion);
     }
-    
-    public List<HistorialDTO> listarHistorial() throws MiExcepcion{
-        ArrayList<HistorialDTO> historial = hdao.listarHistorial(conexion);
+
+    public List<Object> listarHistorial() throws MiExcepcion {
+        ArrayList<Object> historial = hdao.listarTodo(conexion);
         return historial;
     }
 }

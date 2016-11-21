@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import modelo.PreguntaRespuestaDTO;
 import modelo.UsuarioDTO;
 import utilidades.MiExcepcion;
 
@@ -18,14 +17,14 @@ import utilidades.MiExcepcion;
  *
  * @author UserQV
  */
-public class UsuarioDAO {
+public class UsuarioDAO implements ModeloDAO {
 
     PreparedStatement statement;
     ResultSet rs;
-    String mensaje = "";
 
-    public ArrayList<UsuarioDTO> listarUsuarios(Connection conexion) throws MiExcepcion {
-        ArrayList<UsuarioDTO> listaUsuarios = new ArrayList();
+    @Override
+    public ArrayList<Object> listarTodo(Connection conexion) throws MiExcepcion {
+        ArrayList<Object> listaUsuarios = new ArrayList();
         try {
             String query = "SELECT Id_usuario, Nombre_usuario, Apellido_usuario, Telefono_usuario, Email_usuario, "
                     + "roles.Nombre_rol, Aprobar_pregunta_usuario, user, usuario.id_estado_usuario, estado_usuario.estado "
@@ -57,34 +56,8 @@ public class UsuarioDAO {
         return listaUsuarios;
     }
 
-    public ArrayList<UsuarioDTO> listarAutores(Connection conexion) throws MiExcepcion {
-        ArrayList<UsuarioDTO> listaAutores = new ArrayList();
-        try {
-            String query = "SELECT Id_usuario, Nombre_usuario, Apellido_usuario, Telefono_usuario, Email_usuario, Id_rol, Aprobar_pregunta_usuario, user "
-                    + "FROM usuario "
-                    + "WHERE Id_rol=2;";
-            statement = conexion.prepareStatement(query);
-            rs = statement.executeQuery();
-            while (rs.next()) {
-                UsuarioDTO autor = new UsuarioDTO();
-                autor.setId(rs.getInt(1));
-                autor.setNombre(rs.getString(2));
-                autor.setApellido(rs.getString(3));
-                autor.setTelefono(rs.getString(4));
-                autor.setEmail(rs.getString(5));
-                autor.setIdRol(rs.getInt(6));
-                autor.setAprobarPregunta(rs.getInt(7) == 1 ? true : false);
-                autor.setUser(rs.getString(8));
-                listaAutores.add(autor);
-            }
-        } catch (SQLException sqlexception) {
-            throw new MiExcepcion("Error " + sqlexception, sqlexception);
-        }
-        //devolvemos el arreglo
-        return listaAutores;
-    }
-
-    public UsuarioDTO detallesUsuarioModificar(Connection conexion, int id) throws MiExcepcion {
+    @Override
+    public Object seleccionarUno(Connection conexion, int id) throws MiExcepcion {
         UsuarioDTO userDTO = new UsuarioDTO();
         try {
             String query = "SELECT Id_usuario, Nombre_usuario, Apellido_usuario, Telefono_usuario, Email_usuario,"
@@ -109,8 +82,39 @@ public class UsuarioDAO {
         //devolvemos el arreglo
         return userDTO;
     }
-    
-    public String editarUsuario(Connection conexion, UsuarioDTO user, int id) {
+
+    @Override
+    public String crearRegistro(Object dto, Connection conexion) throws MiExcepcion {
+        UsuarioDTO IngUsu = (UsuarioDTO) dto;
+        String rta = "";
+        try {
+            statement = conexion.prepareStatement("INSERT INTO usuario(Nombre_usuario, Apellido_usuario, Telefono_usuario, Email_usuario,"
+                    + "id_estado_usuario, Id_rol, user) VALUES (?,?,?,?,?,?,?)");
+            statement.setString(1, IngUsu.getNombre());
+            statement.setString(2, IngUsu.getApellido());
+            statement.setString(3, IngUsu.getTelefono());
+            statement.setString(4, IngUsu.getEmail());
+            statement.setInt(5, IngUsu.getIdEstado());
+            statement.setInt(6, IngUsu.getIdRol());
+            statement.setString(7, IngUsu.getUser());
+
+            int resultado = statement.executeUpdate();
+            if (resultado == 0) {
+                rta = "No se pudo registrar el usuario";//Mensaje No.6
+
+            } else {
+                rta = "Usuario Registrado";//Mensaje No.5
+            }
+
+        } catch (SQLException sqle) {
+            rta = sqle.getMessage();
+        }
+        return rta;
+    }
+
+    @Override
+    public String editar(Connection conexion, Object dto, int id) throws MiExcepcion {
+        UsuarioDTO user = (UsuarioDTO) dto;
         int resultado = 0;
         String respuesta = "";
         String sql = "UPDATE usuario set Nombre_usuario=?, Apellido_usuario=?, Telefono_usuario=?, Email_usuario=?, "
@@ -143,7 +147,61 @@ public class UsuarioDAO {
         }
         return respuesta;
     }
-    
+
+    @Override
+    public String cambiarEstado(String id, Connection conexion, int estado) throws MiExcepcion {
+        int resultado = 0;
+        String respuesta = "";
+        String sql = "UPDATE usuario set id_estado_usuario=? "
+                + "WHERE Id_usuario = ?;";
+        try {
+            statement = conexion.prepareStatement(sql);
+            statement.setInt(1, estado);
+            statement.setString(2, id);
+
+            resultado = statement.executeUpdate();
+
+            //comprobar si se ejecuto la instruccion en sql
+            if (resultado != 0) {
+                respuesta = "cambiada correctamente";
+
+            } else {
+                respuesta = "se ha cambiado";
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error de MySQL: " + ex.getMessage());
+        }
+        return respuesta;
+    }
+
+    public ArrayList<UsuarioDTO> listarAutores(Connection conexion) throws MiExcepcion {
+        ArrayList<UsuarioDTO> listaAutores = new ArrayList();
+        try {
+            String query = "SELECT Id_usuario, Nombre_usuario, Apellido_usuario, Telefono_usuario, Email_usuario, Id_rol, Aprobar_pregunta_usuario, user "
+                    + "FROM usuario "
+                    + "WHERE Id_rol=2;";
+            statement = conexion.prepareStatement(query);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                UsuarioDTO autor = new UsuarioDTO();
+                autor.setId(rs.getInt(1));
+                autor.setNombre(rs.getString(2));
+                autor.setApellido(rs.getString(3));
+                autor.setTelefono(rs.getString(4));
+                autor.setEmail(rs.getString(5));
+                autor.setIdRol(rs.getInt(6));
+                autor.setAprobarPregunta(rs.getInt(7) == 1 ? true : false);
+                autor.setUser(rs.getString(8));
+                listaAutores.add(autor);
+            }
+        } catch (SQLException sqlexception) {
+            throw new MiExcepcion("Error " + sqlexception, sqlexception);
+        }
+        //devolvemos el arreglo
+        return listaAutores;
+    }
+
     public String cambiarEstadoAprobacion(String id, Connection conexion, int estado) {
         int resultado = 0;
         String respuesta = "";
@@ -199,56 +257,9 @@ public class UsuarioDAO {
         return userDTO;
     }
 
-    public String IngresarUsuario(UsuarioDTO IngUsu, Connection conexion) {
-        String rta = "";
-        try {
-            statement = conexion.prepareStatement("INSERT INTO usuario(Nombre_usuario, Apellido_usuario, Telefono_usuario, Email_usuario,"
-                    + "id_estado_usuario, Id_rol, user) VALUES (?,?,?,?,?,?,?)");
-            statement.setString(1, IngUsu.getNombre());
-            statement.setString(2, IngUsu.getApellido());
-            statement.setString(3, IngUsu.getTelefono());
-            statement.setString(4, IngUsu.getEmail());
-            statement.setInt(5, IngUsu.getIdEstado());
-            statement.setInt(6, IngUsu.getIdRol());
-            statement.setString(7, IngUsu.getUser());
-
-            int resultado = statement.executeUpdate();
-            if (resultado == 0) {
-                rta = "No se pudo registrar el usuario";//Mensaje No.6
-
-            } else {
-                rta = "Usuario Registrado";//Mensaje No.5
-            }
-
-        } catch (SQLException sqle) {
-            rta = sqle.getMessage();
-        }
-        return rta;
+    @Override
+    public ArrayList<Object> listarTodosFiltro(Connection conexion, int id) throws MiExcepcion {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public String cambiarEstadoUsuario(String id, Connection conexion, int estado) {
-        int resultado = 0;
-        String respuesta = "";
-        String sql = "UPDATE usuario set id_estado_usuario=? "
-                + "WHERE Id_usuario = ?;";
-        try {
-            statement = conexion.prepareStatement(sql);
-            statement.setInt(1, estado);
-            statement.setString(2, id);
-
-            resultado = statement.executeUpdate();
-
-            //comprobar si se ejecuto la instruccion en sql
-            if (resultado != 0) {
-                respuesta = "cambiada correctamente";
-
-            } else {
-                respuesta = "se ha cambiado";
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("Error de MySQL: " + ex.getMessage());
-        }
-        return respuesta;
-    }
 }

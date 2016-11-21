@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import modelo.LoginDTO;
-import utilidades.Conexion;
 
 /**
  *
@@ -19,7 +18,6 @@ import utilidades.Conexion;
 public class LoginDAO {
     PreparedStatement statement = null;
     ResultSet rs = null;
-    String mensaje = "";
 
     public LoginDTO Login(LoginDTO validaUsu, Connection conexion) throws SQLException {
         LoginDTO user = new LoginDTO();
