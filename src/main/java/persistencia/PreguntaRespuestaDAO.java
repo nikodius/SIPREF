@@ -56,11 +56,6 @@ public class PreguntaRespuestaDAO implements ModeloDAO{
     }
 
     @Override
-    public ArrayList<Object> listarTodosFiltro(Connection conexion, int id) throws MiExcepcion {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Object seleccionarUno(Connection conexion, int id) throws MiExcepcion {
         PreguntaRespuestaDTO pr = new PreguntaRespuestaDTO();
         try {
@@ -200,5 +195,10 @@ public class PreguntaRespuestaDAO implements ModeloDAO{
         }
         //devolvemos el arreglo
         return listaPreguntas;
+    }
+    
+    @Override
+    public ArrayList<Object> listarTodosFiltro(Connection conexion, int id) throws MiExcepcion {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
