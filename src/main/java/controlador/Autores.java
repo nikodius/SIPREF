@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import Factory.FactoryDTO;
@@ -19,8 +14,7 @@ import modelo.UsuarioDTO;
 import utilidades.MiExcepcion;
 
 /**
- *
- * @author UserQV
+ * Controlador para gestionar autores 
  */
 public class Autores extends HttpServlet {
 
@@ -51,6 +45,14 @@ public class Autores extends HttpServlet {
         }
     }
 
+    /**
+     * peticion para listar los autores
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void listarAutores(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getQueryString() == null || request.getParameter("msg") != null) {
             ArrayList<UsuarioDTO> listaAutores = (ArrayList) facadeU.listarAutores();
@@ -61,6 +63,14 @@ public class Autores extends HttpServlet {
         }
     }
 
+    /**
+     * peticion para darle permisos de aprobacion al autor
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void aprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("approve") != null) {
             String id = request.getParameter("approve");
@@ -72,6 +82,14 @@ public class Autores extends HttpServlet {
         }
     }
 
+    /**
+     * peticion para quitarle permisos de aprobacion al autor
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void desaprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("disapprove") != null) {
             String id = request.getParameter("disapprove");

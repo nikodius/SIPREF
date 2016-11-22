@@ -4,8 +4,7 @@ import modelo.*;
 
 
 /**
- * Interface Abstract factory operaciones
- * @author NiKo
+ * Interface factory
  */
 public interface Factory {
     

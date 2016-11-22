@@ -20,8 +20,7 @@ import modelo.UsuarioDTO;
 import utilidades.MiExcepcion;
 
 /**
- *
- * @author UserQV
+ * Controlador para gestionar usuarios 
  */
 public class GestionUsuarios extends HttpServlet {
 
@@ -52,6 +51,14 @@ public class GestionUsuarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion listar usuarios
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void ListarUsuarios(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getQueryString() == null || request.getParameter("msg") != null) {
             ArrayList<UsuarioDTO> listaPreguntas = (ArrayList) facadeUser.listarUsuarios();
@@ -62,6 +69,14 @@ public class GestionUsuarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion redireccion a nuevo usuario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     * @throws MiExcepcion 
+     */
     public void redireccionNewUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion {
         if (request.getParameter("add") != null) {
             request.getRequestDispatcher("newUser.jsp").forward(request, response);
@@ -70,6 +85,14 @@ public class GestionUsuarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion crear nuevo usuario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void nuevoUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("new") != null) {
             String respuesta = facadeUser.insertarUsuario(dtoFactory.crearUsuario(request.getParameter("nombresUsuario"), request.getParameter("apellidosUsuario"), request.getParameter("telefonoUsuario"), request.getParameter("correoUsuario"), Integer.parseInt(request.getParameter("estadoUsuario")), Integer.parseInt(request.getParameter("rolUsuario")), request.getParameter("usuarioLogin")));
@@ -80,6 +103,14 @@ public class GestionUsuarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion desactivar un usuario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void desactivarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("desactivate") != null) {
             String id = request.getParameter("desactivate");
@@ -91,6 +122,14 @@ public class GestionUsuarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion acticar un usuario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void activarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("active") != null) {
             String id = request.getParameter("active");
@@ -102,6 +141,14 @@ public class GestionUsuarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion redireccionar editar usuario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void redirectEditarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("editId") != null) {
             int id = Integer.parseInt(request.getParameter("editId"));
@@ -113,6 +160,13 @@ public class GestionUsuarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion para actualizar un usuario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion 
+     */
     public void actualizarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion {
         String respuesta = "";
         if (request.getParameter("edit") != null) {

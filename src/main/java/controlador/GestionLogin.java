@@ -27,8 +27,7 @@ import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
 /**
- *
- * @author Nico
+ * Controlador para gestionar login
  */
 public class GestionLogin extends HttpServlet {
 
@@ -59,6 +58,16 @@ public class GestionLogin extends HttpServlet {
         }
     }
 
+    /**
+     * peticion redireccionar al login
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     * @throws MiExcepcion
+     * @throws SQLException
+     * @throws NamingException 
+     */
     public void redireccionLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion, SQLException, NamingException {
         if (request.getQueryString() == null || request.getParameter("msg") != null) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -67,6 +76,16 @@ public class GestionLogin extends HttpServlet {
         }
     }
 
+    /**
+     * peticion validar usuario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     * @throws MiExcepcion
+     * @throws SQLException
+     * @throws NamingException 
+     */
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion, SQLException, NamingException {
         if (request.getParameter("enviar") != null) {
             String respuesta;
@@ -93,6 +112,13 @@ public class GestionLogin extends HttpServlet {
         }
     }
 
+    /**
+     * peticion cerrar sesion
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException 
+     */
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (request.getParameter("logout") != null) {
             HttpSession sesion = request.getSession(false);

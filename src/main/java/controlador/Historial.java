@@ -18,8 +18,7 @@ import modelo.HistorialDTO;
 import modelo.PreguntaRespuestaDTO;
 
 /**
- *
- * @author UserQV
+ * Controlador para gestionar el historial
  */
 public class Historial extends HttpServlet {
 

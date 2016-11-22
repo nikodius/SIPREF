@@ -3,9 +3,9 @@ package Factory;
 import modelo.*;
 
 /**
- * Implementacion AbstractFactory operaciones
+ * Implementacion factory DTO
+ * usada por controladores, se encarga de crear objetos tipo DTO
  *
- * @author NiKo
  */
 public class FactoryDTO implements Factory {
 

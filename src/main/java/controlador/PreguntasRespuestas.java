@@ -22,8 +22,7 @@ import utilidades.MiExcepcion;
 import utilidades.Utilities;
 
 /**
- *
- * @author UserQV
+ * Controlador para gestionar preguntas y respuestas FAQs 
  */
 public class PreguntasRespuestas extends HttpServlet {
 
@@ -51,6 +50,14 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion listar FAQs
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void ListarPreguntas(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getQueryString() == null || request.getParameter("msg") != null) {
             ArrayList<PreguntaRespuestaDTO> listaPreguntas = (ArrayList) facadePR.listarPreguntas();
@@ -61,6 +68,14 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion redireccionar a nueva FAQ
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     * @throws MiExcepcion 
+     */
     public void redireccionNuevaFAQ(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion {
         if (request.getParameter("add") != null) {
             request.getRequestDispatcher("newFAQ.jsp").forward(request, response);
@@ -69,6 +84,14 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion crear nueva FAQ
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void nuevaPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("new") != null) {
             String respuesta = facadePR.insertarRespuesta(dtoFactory.crearPreguntaRespuesta(request.getParameter("inputQuestion"), request.getParameter("inputAnswer"), request.getParameter("inputInicio"), request.getParameter("inputFin"), String.valueOf(Utilities.getFechaActual()), Integer.parseInt(request.getParameter("idUser"))));
@@ -79,6 +102,14 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion desactivar FAQ
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void desactivarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("deactivate") != null) {
             String id = request.getParameter("deactivate");
@@ -90,6 +121,14 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion activar FAQ
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void activarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("active") != null) {
             String id = request.getParameter("active");
@@ -101,6 +140,14 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion aprobar FAQ
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void aprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("approve") != null) {
             String id = request.getParameter("approve");
@@ -112,6 +159,14 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion desaprobar FAQ
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void desaprobarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("disapprove") != null) {
             String id = request.getParameter("disapprove");
@@ -123,6 +178,14 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion redireccionar a editar pregunta
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void redirectEditarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("editId") != null) {
             int id = Integer.parseInt(request.getParameter("editId"));
@@ -134,6 +197,14 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion redireccionar a comentarios de FAQ
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void redirectComentariosPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("commentsId") != null) {
             int id = Integer.parseInt(request.getParameter("commentsId"));
@@ -146,6 +217,13 @@ public class PreguntasRespuestas extends HttpServlet {
         }
     }
 
+    /**
+     * peticion actualizar FAQ
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion 
+     */
     public void actualizarPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion {
         String respuesta = "";
         if (request.getParameter("edit") != null) {

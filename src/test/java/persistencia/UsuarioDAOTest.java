@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import utilidades.Conexion;
 
 /**
  *
@@ -77,14 +78,12 @@ public class UsuarioDAOTest {
     @Test
     public void testCrearRegistro() throws Exception {
         System.out.println("crearRegistro");
-        Object dto = null;
-        Connection conexion = null;
+        Object dto = new UsuarioDTO("nombre", "apellido", "4856", "email@asd.com", 1, 1, "usuario");
+        Connection conexion = Conexion.getInstance();;
         UsuarioDAO instance = new UsuarioDAO();
-        String expResult = "";
+        String expResult = "Usuario Registrado";
         String result = instance.crearRegistro(dto, conexion);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

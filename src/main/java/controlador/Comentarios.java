@@ -18,8 +18,7 @@ import utilidades.MiExcepcion;
 import utilidades.Utilities;
 
 /**
- *
- * @author Nico
+ * Controlador para gestionar comentarios 
  */
 @WebServlet(name = "Comentarios", urlPatterns = {"/Comentarios"})
 public class Comentarios extends HttpServlet {
@@ -50,6 +49,14 @@ public class Comentarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion de nuevo comentario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void nuevoComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("sendComent") != null) {
             String respuesta = facadePR.insertarComentario(dtoFactory.crearComentario(request.getParameter("coment"), request.getParameter("name"), request.getParameter("mail"), Integer.parseInt(request.getParameter("idPR")), String.valueOf(Utilities.getFechaActual())));
@@ -59,6 +66,14 @@ public class Comentarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion para aprobar comentario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void aprobarComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("approve") != null) {
             String id = request.getParameter("approve");
@@ -70,6 +85,14 @@ public class Comentarios extends HttpServlet {
         }
     }
 
+    /**
+     * peticion desaprobar nuevo comentario
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws MiExcepcion
+     * @throws ServletException 
+     */
     public void desaprobarComentario(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("disapprove") != null) {
             String id = request.getParameter("disapprove");

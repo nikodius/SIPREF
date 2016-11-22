@@ -17,8 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import modelo.PreguntaRespuestaDTO;
 
 /**
- *
- * @author UserQV
+ * Controlador para consultar FAQs
  */
 public class Consultar extends HttpServlet {
 
