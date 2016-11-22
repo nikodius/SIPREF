@@ -9,8 +9,12 @@ import Factory.FactoryDTO;
 import facade.FachadaUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.LoginDTO;
 import modelo.UsuarioDTO;
+import utilidades.ActiveDirectory;
 import utilidades.Conexion;
 import utilidades.MiExcepcion;
 
@@ -40,21 +45,21 @@ public class GestionLogin extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8"); //Para que reconozca caracteres especiales y tildes
-        try (PrintWriter out = response.getWriter()) {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            response.setContentType("text/html;charset=UTF-8");
+            request.setCharacterEncoding("UTF-8"); //Para que reconozca caracteres especiales y tildes
+            PrintWriter out = response.getWriter();
             conexion = Conexion.getInstance();
             facadeUser = new FachadaUsuarios();
             dtoFactory = new FactoryDTO();
             redireccionLogin(request, response);
-        } catch (MiExcepcion | SQLException ex) {
+        } catch (Exception ex) {
             response.sendRedirect("GestionLogin?msg=" + ex.getMessage());
         }
     }
 
-    public void redireccionLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion, SQLException {
+    public void redireccionLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion, SQLException, NamingException {
         if (request.getQueryString() == null || request.getParameter("msg") != null) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
@@ -62,12 +67,13 @@ public class GestionLogin extends HttpServlet {
         }
     }
 
-    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion, SQLException {
+    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, MiExcepcion, SQLException, NamingException {
         if (request.getParameter("enviar") != null) {
             String respuesta;
-            LoginDTO ldto = facadeUser.login(dtoFactory.crearLogin(request.getParameter("nombreUsuario"), request.getParameter("contraseniaUsuario")));
-            if (ldto.isValido()) {
-                UsuarioDTO user = facadeUser.detallesUsuarioLogin(ldto.getNombreUsuario());
+//            LoginDTO ldto = facadeUser.login(dtoFactory.crearLogin(request.getParameter("nombreUsuario"), request.getParameter("contraseniaUsuario")));
+//            if (ldto.isValido()) {
+            if (ActiveDirectory.UserAuth(request.getParameter("nombreUsuario"), request.getParameter("contraseniaUsuario"))) {
+                UsuarioDTO user = facadeUser.detallesUsuarioLogin(request.getParameter("nombreUsuario"));
                 //valida usuario activo
                 if (user.getIdEstado() == 1) {
                     HttpSession sesion = request.getSession(true);
