@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="css/estilos.css">
         <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
         <script src="js/jquery-3.1.1.js"></script>
+        <script src="js/bootstrap.js"></script>
         <title>SIPREF</title>
     </head>
     <body>
@@ -41,12 +42,12 @@
                                     <div class="col-xs-12 col-sm-2">
                                         <a href="http://www.poli.edu.co/"><img src="images/Logo.PNG" alt="logo" width="150" height="80"/></a>
                                     </div>
-                                    <div class="col-xs-10 col-sm-8">
-                                        <h5 class=""><strong>SISTEMA DE INFORMACION DE PREGUNTAS Y RESPUESTAS FRECUENTES</strong></h5>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <h5><strong>SISTEMA DE INFORMACION DE PREGUNTAS Y RESPUESTAS FRECUENTES</strong></h5>
                                         <h4>SIPREF</h4>
                                     </div>
                                     <% if (usuario.getUser() != null) {%>
-                                    <div class="col-xs-2 col-sm-2">
+                                    <div class="col-xs-12 col-sm-2">
                                         <div id="datos" align="center" class="">
 
                                             <span>Bienvenido <% out.print(usuario.getUser());%></span><br>
@@ -58,25 +59,14 @@
                                         </div>
                                     </div>
                                     <%} else {%>  
-                                    <div class="col-xs-1 col-sm-1 hidden-xs btnIngresar">
+                                    <div class="col-xs-12 col-sm-1 btnIngresar">
                                         <a id="aLogin" href="GestionLogin"><i class="fa fa-user" aria-hidden="true"> Ingresar</i></a>
                                     </div>
-
                                 </div>
-                                <div class="row visible-xs">
-                                    <div class="col-xs-4 col-sm-4"></div>
-                                    <div class="col-xs-4 col-sm-4">
-                                        <a id="aLogin" href="GestionLogin"><i class="fa fa-user" aria-hidden="true"> Ingresar</i></a>
-                                    </div>
-                                    <div class="col-xs-4 col-sm-4"></div>
-                                </div>
-
                                 <%}%>       
-
-
                             </div> 
                         </div>
                     </div>         
                 </div>
-            </header>
+            </header>                         
 

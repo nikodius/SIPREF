@@ -30,7 +30,7 @@
                 url: 'js/Spanish.json'
             }
         });
-        $("#mensaje").fadeOut(7000); 
+        $("#mensaje").fadeOut(7000);
     });
 </script>
 <div class="row cajaPrincipal">
@@ -39,13 +39,23 @@
     <% }%>
 
     <% if (usuario.getIdRol() == 1) {%>
-    <nav>
-        <ul>
-            <li><a class="active" href="PreguntasRespuestas">Preguntas Respuestas</a></li>
-            <li><a href="Autores">Permiso Aprobación</a></li>
-            <li><a href="GestionUsuarios">Usuarios</a></li>
-            <li><a href="Historial">Historial Modificaciones</a></li>
-        </ul>
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand visible-xs">Menú</span>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul>
+                <li><a class="active" href="PreguntasRespuestas">Preguntas Respuestas</a></li>
+                <li><a href="Autores">Permiso Aprobación</a></li>
+                <li><a href="GestionUsuarios">Usuarios</a></li>
+                <li><a href="Historial">Historial Modificaciones</a></li>
+            </ul>
+        </div>
     </nav>
     <br/>
     <% } %>

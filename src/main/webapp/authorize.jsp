@@ -36,13 +36,23 @@
     });
 </script>
 <div class="row cajaPrincipal">
-    <nav>
-        <ul>
-            <li><a href="PreguntasRespuestas">Preguntas Respuestas</a></li>
-            <li><a class="active" href="Autores">Permiso Aprobación</a></li>
-            <li><a href="GestionUsuarios">Usuarios</a></li>
-            <li><a href="Historial">Historial Modificaciones</a></li>
-        </ul>
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand visible-xs">Menú</span>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul>
+                <li><a href="PreguntasRespuestas">Preguntas Respuestas</a></li>
+                <li><a class="active" href="Autores">Permiso Aprobación</a></li>
+                <li><a href="GestionUsuarios">Usuarios</a></li>
+                <li><a href="Historial">Historial Modificaciones</a></li>
+            </ul>
+        </div>
     </nav>
     <br/>
     <!--div align="left"><a href="PreguntasRespuestas"><img src="images/back.png" alt="back"/></a></div> <br-->

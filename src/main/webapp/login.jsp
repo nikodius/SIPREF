@@ -59,7 +59,7 @@
                                     <input class="form-control" name="contraseniaUsuario" id="contraseniaUsuario" type="password"  placeholder= "Contraseña" tabindex="2" required maxlength="45"  title="Digite su contraseña" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-xs-offset-1 col-md-offset-1">
+                            <div>
                                 <article class="post clearfix">
                                     <div align="center" class="contenedor-botones">
                                         <!--button class="btn btn-primary" type="submit" name="enviar" value="Ingresar">Iniciar Sesión <span class="glyphicon glyphicon-ok-sign"></span></button-->
