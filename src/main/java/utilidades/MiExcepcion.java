@@ -2,8 +2,7 @@
 package utilidades;
 
 /**
- *
- * @author jeisson
+ * clase con exception personalizada
  */
 public class MiExcepcion extends Exception {
 

@@ -94,7 +94,7 @@ public class PreguntasRespuestas extends HttpServlet {
      */
     public void nuevaPregunta(HttpServletRequest request, HttpServletResponse response) throws IOException, MiExcepcion, ServletException {
         if (request.getParameter("new") != null) {
-            String respuesta = facadePR.insertarRespuesta(dtoFactory.crearPreguntaRespuesta(request.getParameter("inputQuestion"), request.getParameter("inputAnswer"), request.getParameter("inputInicio"), request.getParameter("inputFin"), String.valueOf(Utilities.getFechaActual()), Integer.parseInt(request.getParameter("idUser"))));
+            String respuesta = facadePR.insertarFAQ(dtoFactory.crearPreguntaRespuesta(request.getParameter("inputQuestion"), request.getParameter("inputAnswer"), request.getParameter("inputInicio"), request.getParameter("inputFin"), String.valueOf(Utilities.getFechaActual()), Integer.parseInt(request.getParameter("idUser"))));
             facadePR.insertarHistorial(dtoFactory.crearHistorial(request.getParameter("user"), "creo nueva pregunta: " + request.getParameter("inputQuestion"), String.valueOf(new Date())));
             response.sendRedirect("PreguntasRespuestas?msg=" + respuesta);
         } else {

@@ -16,8 +16,7 @@ import modelo.PreguntaRespuestaDTO;
 import utilidades.MiExcepcion;
 
 /**
- *
- * @author UserQV
+ * clase modelo dao FAQ
  */
 public class PreguntaRespuestaDAO implements ModeloDAO{
 

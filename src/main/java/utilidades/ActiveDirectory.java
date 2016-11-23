@@ -16,13 +16,19 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
 /**
- *
- * @author UserQV
+ * clase para la conexion con ldap o directorio activo
  */
 public class ActiveDirectory {
 
     static DirContext ldapContext;
 
+    /**
+     * metodo para autenticar un usuario en el directorio activo
+     * @param user
+     * @param psw
+     * @return
+     * @throws NamingException 
+     */
     public static boolean UserAuth(String user, String psw) throws NamingException {
         boolean salida = false;
         try {

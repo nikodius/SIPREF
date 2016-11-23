@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import utilidades.MiExcepcion;
 
 /**
- *
- * @author UserQV
+ * interface con metodos usales en los DAO
  */
 public interface ModeloDAO {
 

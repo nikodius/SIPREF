@@ -8,8 +8,7 @@ package modelo;
 import java.util.Date;
 
 /**
- *
- * @author UserQV
+ * clase modelo dto comentarios
  */
 public class ComentarioDTO {
     
@@ -25,6 +24,14 @@ public class ComentarioDTO {
     public ComentarioDTO() {
     }
 
+    /**
+     * 
+     * @param contenido
+     * @param fechaComentario
+     * @param nombreComentarista
+     * @param emailComentarista
+     * @param idPreguntaRespuesta 
+     */
     public ComentarioDTO(String contenido, String fechaComentario, String nombreComentarista, String emailComentarista, int idPreguntaRespuesta) {
         this.contenido = contenido;
         this.fechaComentario = fechaComentario;

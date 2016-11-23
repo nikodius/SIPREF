@@ -22,4 +22,5 @@ modelo\PreguntaRespuestaDTO.class
 controlador\GestionLogin.class
 persistencia\PreguntaRespuestaDAO.class
 modelo\LoginDTO.class
+utilidades\ActiveDirectory.class
 controlador\PreguntasRespuestas.class

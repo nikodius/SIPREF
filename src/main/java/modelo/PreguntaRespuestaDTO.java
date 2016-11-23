@@ -8,8 +8,7 @@ package modelo;
 import java.util.ArrayList;
 
 /**
- *
- * @author NicolasRG
+ * clase modelo dto FAQ
  */
 public class PreguntaRespuestaDTO {
     

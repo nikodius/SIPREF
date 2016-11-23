@@ -14,8 +14,7 @@ import modelo.UsuarioDTO;
 import utilidades.MiExcepcion;
 
 /**
- *
- * @author UserQV
+ * clase modelo dao usuario
  */
 public class UsuarioDAO implements ModeloDAO {
 

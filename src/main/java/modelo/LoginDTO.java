@@ -6,8 +6,7 @@
 package modelo;
 
 /**
- *
- * @author Jairo Medina 2016-10-24
+ * clase modelo dto login
  */
 public class LoginDTO {
     private int idUsuario;

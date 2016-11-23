@@ -6,8 +6,7 @@
 package modelo;
 
 /**
- *
- * @author UserQV
+ * clase modelo dto historial
  */
 public class HistorialDTO {
     

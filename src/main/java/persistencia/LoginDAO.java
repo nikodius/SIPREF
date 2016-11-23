@@ -12,8 +12,7 @@ import java.sql.SQLException;
 import modelo.LoginDTO;
 
 /**
- *
- * @author Jairo Medina 2016-10-24
+ * clase modelo dao login
  */
 public class LoginDAO {
     PreparedStatement statement = null;

@@ -6,8 +6,7 @@
 package modelo;
 
 /**
- *
- * @author UserQV
+ * clase modelo dto usuario
  */
 public class UsuarioDTO {
     
